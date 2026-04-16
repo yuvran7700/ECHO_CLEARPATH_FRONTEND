@@ -1,0 +1,70 @@
+.panel {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  border-color: #D9D9D9;
+  padding: 41px 24px;
+  margin-top: 0px;
+}
+
+.panel h2 {
+  font-size: 30px;
+  font-weight: 600;
+  font-family: Montserrat;
+  margin: 0 0 8px;
+  color: #1E1E1E
+}
+
+.panel .subtitle {
+  font-size: 18px;
+  font-family: Montserrat;
+  color: #1E1E1E;
+  margin: 0 0 16px;
+}
+
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.card {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  border-color: #D9D9D9;
+  padding: 16px;
+}
+
+.card h3 {
+  font-size: 18px;
+  font-weight: 600;
+  font-family: Montserrat;
+  margin: 0 0 6px;
+  color: #1E1E1E
+}
+
+.card p {
+  font-size: 15px;
+  font-family: Montserrat;
+  color: rgba(30, 30, 30, 0.75);
+  margin: 0 0 12px;
+  line-height: 1.5;
+}
+
+.button {
+  display: block;
+  text-align: right;
+  text-decoration: none;
+  background: #35516E;
+  color: #F2F2F2;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-family: Montserrat;
+  width: fit-content;
+  margin-left: auto;  /* pushes button to the right */
+  transition: opacity 0.2s;
+}
+
+.button:hover {
+  opacity: 0.85;
+}
