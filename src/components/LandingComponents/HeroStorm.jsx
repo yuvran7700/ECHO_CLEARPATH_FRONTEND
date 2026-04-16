@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion'
 import FlipBoard from './FlipBoard'
 import StormScene from './StormScene'
-import GhostCursor from '../GhostCursor'
 
 const containerVariants = {
     initial: { opacity: 0 },
@@ -68,8 +67,6 @@ export default function HeroStorm({ onSeeSolution }) {
             animate="animate"
             exit="exit"
         >
-            {/* WebGL background */}
-            {/* <GhostCursor /> */}
             
             <div className="absolute inset-0 z-0 pointer-events-none">
                 <StormScene />

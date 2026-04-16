@@ -1,8 +1,9 @@
 import { useState, useCallback, useRef } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import HeroStorm from "../components/LandingComponents/HeroStorm";
 import Navbar from "../components/LandingComponents/NavBar";
 import HeroPrediction from "../components/LandingComponents/HeroPredict";
+import HeroClearPath from "../components/LandingComponents/HeroClearPath";
 
 const STAGE_STORM = 0;
 const STAGE_PREDICT = 1;
@@ -16,10 +17,8 @@ const LandingPage = () => {
         if (isAnimatingRef.current) return;
         isAnimatingRef.current = true;
 
-        // Stage 1 → 2 (storm → predict)
         setStage(STAGE_PREDICT);
 
-        // Stage 2 → 3 after delay (predict → clearpath)
         setTimeout(() => {
             setStage(STAGE_CLEARPATH);
             setTimeout(() => {
@@ -37,17 +36,24 @@ const LandingPage = () => {
         }, 900);
     }, []);
 
+    const wrapperClass =
+        stage === STAGE_CLEARPATH
+            ? "relative w-full min-h-screen"
+            : "relative w-full h-screen overflow-hidden";
+
     return (
-        <div className="relative w-full h-screen overflow-hidden">
-            {/* Persistent Navbar above everything */}
+        <div className={wrapperClass}>
             <Navbar stage={stage} />
 
-            {/* Hero states — AnimatePresence handles enter/exit */}
             <AnimatePresence mode="wait">
                 {stage === STAGE_STORM && (
                     <HeroStorm key="storm" onSeeSolution={handleSeeSolution} />
                 )}
-                {stage === STAGE_PREDICT && <HeroPrediction key="predict" />}
+
+                {stage === STAGE_PREDICT && (
+                    <HeroPrediction key="predict" />
+                )}
+
                 {stage === STAGE_CLEARPATH && (
                     <HeroClearPath key="clearpath" onReset={handleReset} />
                 )}
