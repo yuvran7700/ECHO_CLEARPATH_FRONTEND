@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 
-const NAV_ITEMS = ['Product', 'Integration', 'Demo', 'Get Started']
+const NAV_ITEMS = ['About', 'Contact us', 'Features', 'View API Docs']
 
 export default function Navbar({ stage }) {
   // Stage 0 (storm) = dark bg → light text. Stages 1 & 2 = light/teal bg → dark text
@@ -46,7 +46,7 @@ export default function Navbar({ stage }) {
           whileHover={{ scale: 1.03, opacity: 0.92 }}
           whileTap={{ scale: 0.97 }}
         >
-          Login
+          Try ClearPath
         </motion.button>
       </motion.div>
     </nav>
