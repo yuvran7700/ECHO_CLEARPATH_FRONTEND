@@ -1,4 +1,4 @@
-
+import { useNavigate } from "react-router-dom";
 
 const ModeCard = ({ icon, title, description, accentColor, onClick }) => {
     const colorVariants = {
@@ -30,6 +30,8 @@ const ModeCard = ({ icon, title, description, accentColor, onClick }) => {
 };
 
 export default function ChooseMode() {
+    const navigate = useNavigate()
+
     const modes = [
         {
             id: 'commuter',
@@ -70,7 +72,13 @@ export default function ChooseMode() {
                     <ModeCard
                         key={mode.id}
                         {...mode}
-                        onClick={() => console.log(`Navigating to ${mode.title}`)}
+                        onClick={() => {
+                            if (mode.id === 'commuter') {
+                                navigate('/dashboard/plan-your-journey'); 
+                            } else {
+                                console.log(`Navigating to ${mode.title}`);
+                            }
+                        }}
                     />
                 ))}
             </section>
