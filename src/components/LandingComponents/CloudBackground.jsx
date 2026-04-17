@@ -9,10 +9,10 @@ const STAGES = {
     gradient: 'linear-gradient(160deg, #d8d8d8 0%, #f0f0f0 60%, #fafafa 100%)',
     fog: '#ffffff',
   },
-  clearpath: {
-    gradient: 'linear-gradient(170deg, #2f7d96 0%, #62c5e0 60%, #a6e6ff 100%)',
-    fog: '#ffffff',
-  },
+clearpath: {
+  gradient: 'linear-gradient(180deg, #82cefb 0%, #1f7197 45%, #6690a4 100%)',
+  fog: 'rgba(255,255,255,0.55)',
+},
 }
 
 export default function CloudBackground({ stage = 0 }) {
