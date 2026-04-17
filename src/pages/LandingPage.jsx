@@ -27,15 +27,6 @@ const LandingPage = () => {
         }, 2800);
     }, []);
 
-    const handleReset = useCallback(() => {
-        if (isAnimatingRef.current) return;
-        isAnimatingRef.current = true;
-        setStage(STAGE_STORM);
-        setTimeout(() => {
-            isAnimatingRef.current = false;
-        }, 900);
-    }, []);
-
     const wrapperClass =
         stage === STAGE_CLEARPATH
             ? "relative w-full min-h-screen"
