@@ -2,7 +2,6 @@ import { Routes, Route } from 'react-router-dom';
 import ChooseMode from './pages/ChooseMode';
 import LandingPage from './pages/LandingPage';
 import CommuterDashboard from './pages/CommuterDashboard';
-
 function App() {
   return (
       <>
