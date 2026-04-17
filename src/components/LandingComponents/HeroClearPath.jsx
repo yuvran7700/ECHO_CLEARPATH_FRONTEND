@@ -84,7 +84,6 @@ export default function HeroClearPath() {
 
             <HeroSection />
 
-            {/* --- 2. THE REVEAL (Container Scroll) --- */}
             <section className="relative z-10 -mt-[20vh]">
                 <ContainerScroll
                     titleComponent={
