@@ -1,6 +1,6 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-@import "@fontsource-variable/geist";
+@import "@fontsource-variable/inter";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -78,9 +78,11 @@ body {
 @layer base {
   .theme {
     --font-heading: var(--font-sans);
-    --font-sans: 'Geist Variable', sans-serif;
+    --font-sans: 'Inter Variable', sans-serif;
   }
   :root {
+    --font-sans: 'Inter Variable', sans-serif;
+    --font-heading: "Inter Variable", sans-serif;
     --background: oklch(1 0 0);
     --foreground: oklch(0.145 0 0);
     --card: oklch(1 0 0);
@@ -147,6 +149,11 @@ body {
     --sidebar-border: oklch(1 0 0 / 10%);
     --sidebar-ring: oklch(0.556 0 0);
   }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    letter-spacing: -0.02em; 
+  }
+
   * {
     @apply border-border outline-ring/50;
   }
