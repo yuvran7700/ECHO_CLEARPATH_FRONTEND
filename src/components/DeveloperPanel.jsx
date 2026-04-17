@@ -1,11 +1,13 @@
 import styles from '../styles/DeveloperPanel.module.css'
+import Button from '@mui/material/Button';
+import { useNavigate } from 'react-router-dom';
 
 const links = [
   {
     title: 'API documentation',
     description: 'Open the reference for weather, alert and social media search endpoints, request parameters, and response schemas.',
     buttonLabel: 'Open docs',
-    href: '#'
+    href: '/api-doc'
   },
   {
     title: 'Integration guide',
@@ -16,6 +18,17 @@ const links = [
 ]
 
 const DeveloperPanel = () => {
+
+  const navigate = useNavigate()
+
+  const handleClick = (href) => {
+    if (href === '/api-doc') {
+      navigate('/api-doc')
+    } else {
+      navigate('/integration-guide')
+    }
+    }
+  
   return (
     <div className={styles.panel}>
       <h2>Developer access</h2>
@@ -26,9 +39,17 @@ const DeveloperPanel = () => {
           <div key={link.title} className={styles.card}>
             <h3>{link.title}</h3>
             <p>{link.description}</p>
-            <a href={link.href} className={styles.button}>
+            <Button
+              variant="contained"
+              onClick={() => handleClick(link.href)}
+              sx={{
+                background: 'var(--accent)',
+                textTransform: 'none',
+                borderRadius: '6px',
+              }}
+            >
               {link.buttonLabel}
-            </a>
+            </Button>
           </div>
         ))}
       </div>

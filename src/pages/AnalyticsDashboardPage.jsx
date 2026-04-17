@@ -1,7 +1,6 @@
 import styles from '../styles/analytics.module.css'
-import { useEffect } from 'react'
 import Navbar from '../components/Navbar'
-import TrainDropDown from '../components/TrainDropDown';
+import TrainDropDown from '../components/TrainDropDown'
 import RiskBanner from '../components/RiskBanner'
 import StatCards from '../components/StatCards'
 import DeveloperPanel from '../components/DeveloperPanel'
@@ -24,10 +23,6 @@ const mockData = [
 ]
 
 const AnalyticsDashboardPage = () => {
-  useEffect(() => {
-    document.body.style.background = 'rgb(255, 255, 255)'
-    return () => { document.body.style.background = '' }
-  }, [])
 
   return (
     <div className={styles.page}>
@@ -38,19 +33,19 @@ const AnalyticsDashboardPage = () => {
 				<TrainDropDown />
 				<RiskBanner risk={49.65} />
 				<div className={styles.twoColumn}>
-								<div className={styles.left}>
-									<div className={styles.dashboard}>
-											<StatCards stats={stats} />
-											<DisruptionChart data={mockData}/>
-									</div>
-								</div>
-								<div className={styles.right}>
-									<div className={styles.dashboard}>
-											<DeveloperPanel />
-									</div>
-								</div>
+					<div className={styles.left}>
+						<div className={styles.dashboard}>
+								<StatCards stats={stats} />
+								<DisruptionChart data={mockData}/>
 						</div>
+					</div>
+					<div className={styles.right}>
+						<div className={styles.dashboard}>
+								<DeveloperPanel />
+						</div>
+					</div>
 				</div>
+			</div>
     </div>
   );
 };

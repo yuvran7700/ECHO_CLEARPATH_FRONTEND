@@ -12,13 +12,13 @@ const Navbar = () => {
       <div className={styles.links}>
         <div className={styles.toggle}>
           <Link
-            to='#'
+            to="/dashboard/plan"
             className={`${styles.toggleBtn} ${!isAnalytics ? styles.active : ''}`}
           >
             Plan Journey
           </Link>
           <Link
-            to='#'
+            to="/dashboard/analytics"
             className={`${styles.toggleBtn} ${isAnalytics ? styles.active : ''}`}
           >
             Explore Data

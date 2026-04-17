@@ -1,0 +1,35 @@
+.wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: left;
+  padding: 40px 0;
+}
+
+.title {
+  font-family: 'Courier New', monospace;
+  font-size: 28px;
+  color: #E1EEEE;
+  margin: 0 0 16px;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+
+.description {
+  color: #E1EEEE;
+  font-size: px;
+  line-height: 1.7;
+  border-radius: 4px;
+  font-family: Inter;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.right {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.left {
+  min-width: 0;
+}

@@ -3,10 +3,10 @@ import { useState, useEffect, useRef } from 'react'
 import styles from '../styles/TrainDropDown.module.css'
 
 const trainLines = [
-{ label: 'T1 - North Shore Line', path: '#' },
-{ label: 'T2 - Inner West Line',  path: '#' },
-{ label: 'T3 - Bankstown Line',   path: '#' },
-{ label: 'T4 - Eastern Suburbs',  path: '#' },
+{ label: 'T1 - North Shore Line', path: '/dashboard/analytics/t1' },
+{ label: 'T2 - Inner West Line',  path: '/dashboard/analytics/t2' },
+{ label: 'T3 - Bankstown Line',   path: '/dashboard/analytics/t3' },
+{ label: 'T4 - Eastern Suburbs',  path: '/dashboard/analytics/t4' },
 ]
 
 const TrainDropDown = () => {

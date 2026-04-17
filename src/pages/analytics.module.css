@@ -1,9 +1,0 @@
-.page {
-  background: rgb(255, 255, 255);
-  min-height: 100vh;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 24px;
-  padding: 24px;
-
-}
