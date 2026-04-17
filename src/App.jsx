@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
-
+import ChooseMode from './pages/ChooseMode';
 import LandingPage from './pages/LandingPage';
 
 function App() {
@@ -7,6 +7,7 @@ function App() {
       <>
         <Routes>
           <Route path="/" element={<LandingPage />} />
+          <Route path="/choose-mode" element={<ChooseMode />} />
           {/* <Route path="/dashboard" element={<Dashboard />} /> */}
           {/* <Route path="/dashboard/plan" element={<CommuterDashboard />} />
           <Route path="/dashboard/analytics" element={<AnalyticsDashboard />} /> */}
