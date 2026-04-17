@@ -55,7 +55,7 @@ const LandingPage = () => {
                 )}
 
                 {stage === STAGE_CLEARPATH && (
-                    <HeroClearPath key="clearpath" onReset={handleReset} />
+                    <HeroClearPath key="clearpath" />
                 )}
             </AnimatePresence>
         </div>
