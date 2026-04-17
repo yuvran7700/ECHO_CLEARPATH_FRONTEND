@@ -9,7 +9,7 @@ const APIDoc = () => {
     return (
         <div className={styles.page}>
             <Navbar />
-            <div className={styles.body}>        {/* ← new wrapper */}
+            <div className={styles.body}> 
                 <DocsSidebar />
                 <div className={styles.container}>
                     <section id="overview">

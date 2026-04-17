@@ -7,11 +7,11 @@ import MenuIcon from '@mui/icons-material/Menu'
 import Divider from '@mui/material/Divider'
 
 const sections = [
-  { label: 'Overview',          href: '#overview',  type: 'anchor' },
-  { label: 'HTTP Status Codes', href: '#statcodes', type: 'anchor' },
-  { label: 'ADAGE Object',      href: '#ADAGE',     type: 'anchor' },
+  { label: 'Overview',          href: '/api-doc#overview',  type: 'anchor' },
+  { label: 'HTTP Status Codes', href: '/api-doc#statcodes', type: 'anchor' },
+  { label: 'ADAGE Object',      href: '/api-doc#ADAGE',     type: 'anchor' },
   { label: 'Weather Microservice', type: 'heading' },
-  { label: '\\collected',       href: '/',          type: 'external' },
+  { label: '\\collected',       href: '/api-doc/collected',          type: 'external' },
   { label: '\\processed',       href: '/dashboard', type: 'external' },
 ]
 
