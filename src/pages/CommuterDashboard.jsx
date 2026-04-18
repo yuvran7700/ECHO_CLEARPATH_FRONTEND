@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import RiskCard from "../components/CommuterDashboardComponents/RiskCardComponent";
 import NSWInteractiveRailMap from "../components/CommuterDashboardComponents/NSWTrainLineMap";
 import RoutePlannerCard from "../components/CommuterDashboardComponents/RoutePlannerCard";
-import CurrentTime from "./CurrentTime";
+import CurrentTime from "../components/CommuterDashboardComponents/CurrentTime";
 
 const LINE_META = {
     T1: "North Shore & Western Line",
@@ -64,7 +64,7 @@ export default function CommuterDashboard() {
                                 the network map to explore exposure across Sydney rail services.
                             </p>
                         </div>
-                    
+
                         <CurrentTime />
                     </div>
                 </header>
@@ -100,14 +100,14 @@ export default function CommuterDashboard() {
                                             <p className="mt-2 text-sm leading-6 text-slate-600">
                                                 {riskMeta.label}. {riskMeta.helper}
                                             </p>
-                                             <div className="mt-4">
-    <RoutePlannerCard
-      from="Parramatta"
-      to="Central"
-      lineId={selectedLineId}
-      risk={risk}
-    />
-  </div>
+                                            <div className="mt-4">
+                                                <RoutePlannerCard
+                                                    from="Parramatta"
+                                                    to="Central"
+                                                    lineId={selectedLineId}
+                                                    risk={risk}
+                                                />
+                                            </div>
                                         </article>
 
                                         <article>
@@ -124,8 +124,8 @@ export default function CommuterDashboard() {
                                                     type="button"
                                                     onClick={() => setRisk(10)}
                                                     className={`rounded-full px-4 py-2 text-sm font-medium transition ${risk === 10
-                                                            ? "bg-slate-900 text-white"
-                                                            : "border border-slate-300 bg-white text-slate-700 hover:bg-slate-50"
+                                                        ? "bg-slate-900 text-white"
+                                                        : "border border-slate-300 bg-white text-slate-700 hover:bg-slate-50"
                                                         }`}
                                                 >
                                                     Low
@@ -135,8 +135,8 @@ export default function CommuterDashboard() {
                                                     type="button"
                                                     onClick={() => setRisk(45)}
                                                     className={`rounded-full px-4 py-2 text-sm font-medium transition ${risk === 45
-                                                            ? "bg-slate-900 text-white"
-                                                            : "border border-slate-300 bg-white text-slate-700 hover:bg-slate-50"
+                                                        ? "bg-slate-900 text-white"
+                                                        : "border border-slate-300 bg-white text-slate-700 hover:bg-slate-50"
                                                         }`}
                                                 >
                                                     Medium
@@ -146,8 +146,8 @@ export default function CommuterDashboard() {
                                                     type="button"
                                                     onClick={() => setRisk(90)}
                                                     className={`rounded-full px-4 py-2 text-sm font-medium transition ${risk === 90
-                                                            ? "bg-slate-900 text-white"
-                                                            : "border border-slate-300 bg-white text-slate-700 hover:bg-slate-50"
+                                                        ? "bg-slate-900 text-white"
+                                                        : "border border-slate-300 bg-white text-slate-700 hover:bg-slate-50"
                                                         }`}
                                                 >
                                                     High

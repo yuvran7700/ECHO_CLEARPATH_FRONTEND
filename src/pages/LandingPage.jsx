@@ -1,7 +1,7 @@
 import { useState, useCallback, useRef } from "react";
 import { AnimatePresence } from "framer-motion";
 import HeroStorm from "../components/LandingComponents/HeroStorm";
-import Navbar from "../components/LandingComponents/NavBar";
+import Navbar from "../components/LandingComponents/LandingNavBar";
 import HeroPrediction from "../components/LandingComponents/HeroPredict";
 import HeroClearPath from "../components/LandingComponents/HeroClearPath";
 
