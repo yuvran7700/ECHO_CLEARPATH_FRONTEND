@@ -1,4 +1,5 @@
 import React from "react"
+import TryClearPathButton from "./TryClearPathButton"
 
 export default function Footer() {
     return (
@@ -37,11 +38,9 @@ export default function Footer() {
 
                 {/* CTA */}
                 <div className="mt-10">
-                    <button className="rounded-full bg-slate-900 text-white px-6 py-3 text-sm font-medium hover:opacity-90 transition">
-                        Try ClearPath
-                    </button>
+                    <TryClearPathButton />
                 </div>
-
+            
             </div>
 
             {/* Bottom */}

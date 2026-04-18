@@ -73,7 +73,6 @@ export default function HeroStorm({ onSeeSolution }) {
                 
             </div>
 
-            {/* Grain overlay */}
             <div
                 className="absolute inset-0 z-[1] pointer-events-none"
                 style={{
@@ -83,10 +82,7 @@ export default function HeroStorm({ onSeeSolution }) {
                 }}
             />
 
-            {/* Content */}
             <div className="relative z-10 flex h-full flex-col items-center justify-center gap-16 px-10 pb-16 pt-28 md:flex-row md:items-center md:justify-between md:gap-12 md:px-14 lg:px-24 xl:px-32">
-                
-                {/* FlipBoard — constrained so it never overflows */}
                 <motion.div
                     className="w-full flex-shrink-0 min-w-0"
                     variants={boardVariants}
@@ -95,7 +91,6 @@ export default function HeroStorm({ onSeeSolution }) {
                     <FlipBoard />
                 </motion.div>
 
-                {/* Text — right side with breathing room */}
                 <div className="flex flex-col items-end text-right min-w-0 md:max-w-xs lg:max-w-sm xl:max-w-md">
                     <motion.h1
                         variants={headingVariants}

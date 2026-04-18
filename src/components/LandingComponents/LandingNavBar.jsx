@@ -1,9 +1,37 @@
 import { motion } from 'framer-motion'
 import TryClearPathButton from './TryClearPathButton'
+// import { useNavigate } from 'react-router-dom'
 
-const NAV_ITEMS = ['About', 'Contact us', 'Features', 'View API Docs']
+const NAV_ITEMS = ['About', 'Features', 'View API Docs']
 
-export default function Navbar({ stage }) {
+export default function Navbar({ stage, onJump }) {
+
+
+const handleNavClick = (item) => {
+    if (item === 'About') {
+      if (stage !== 2) {
+        onJump();
+      } else {
+        const element = document.getElementById('about-section');
+        element?.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+    
+    if (item === 'Features') {
+      if (stage !== 2) {
+        onJump();
+      } else {
+        const element = document.getElementById('feature-section');
+        element?.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    if (item === 'View API Docs') {
+      window.open('https://your-docs-link.com', '_blank');
+    }
+  };
+
+
   // Stage 0 (storm) = dark bg → light text. Stages 1 & 2 = light/teal bg → dark text
   const isDark = stage === 0
 
@@ -28,6 +56,7 @@ export default function Navbar({ stage }) {
         {NAV_ITEMS.map((item) => (
           <motion.button
             key={item}
+            onClick={() => handleNavClick(item)} 
             className="px-4 py-1.5 text-sm font-medium rounded-full transition-colors duration-200"
             style={{ color: isDark ? 'rgba(255,255,255,0.85)' : 'rgba(0,0,0,0.7)' }}
             whileHover={{

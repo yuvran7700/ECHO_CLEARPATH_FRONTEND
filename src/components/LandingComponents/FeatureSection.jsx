@@ -221,7 +221,7 @@ function Step({ step }) {
 
 export default function FeatureSection() {
     return (
-        <section className="relative z-30 bg-white text-black px-8 py-32 rounded-t-[60px] -mt-40">
+        <section id="feature-section" className="relative z-30 bg-white text-black px-8 py-32 rounded-t-[60px] -mt-40">
             <div className="max-w-6xl mx-auto">
 
                 <motion.h2

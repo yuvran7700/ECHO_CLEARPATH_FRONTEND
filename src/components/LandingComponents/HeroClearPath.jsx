@@ -77,7 +77,7 @@ export default function HeroClearPath() {
     };
 
     return (
-        <main ref={containerRef} className="relative w-full bg-[#07111f] text-white">
+        <main id="about-section" ref={containerRef} className="relative w-full bg-[#07111f] text-white">
             <div className="fixed inset-0 z-0">
                 <CloudBackground stage={2} />
             </div>

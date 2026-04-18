@@ -27,6 +27,19 @@ const LandingPage = () => {
         }, 2800);
     }, []);
 
+    const jumpToClearPath = useCallback(() => {
+        setStage(STAGE_CLEARPATH);
+        
+        // We wait for the next tick/render so the ID actually exists in the DOM
+        setTimeout(() => {
+            const element = document.getElementById('about-section');
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+        }, 100); 
+    }, []);
+
+
     const wrapperClass =
         stage === STAGE_CLEARPATH
             ? "relative w-full min-h-screen"
@@ -34,7 +47,7 @@ const LandingPage = () => {
 
     return (
         <div className={wrapperClass}>
-            <Navbar stage={stage} />
+            <Navbar stage={stage} onJump={jumpToClearPath}/>
 
             <AnimatePresence mode="wait">
                 {stage === STAGE_STORM && (
