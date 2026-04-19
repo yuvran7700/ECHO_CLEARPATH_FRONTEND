@@ -13,7 +13,6 @@ html, body, #root {
   margin: 0;
   padding: 0;
   width: 100%;
-  height: 100%;
   /* overflow: hidden; */
 }
 
@@ -163,4 +162,16 @@ body {
   html {
     @apply font-sans;
   }
+}
+
+main {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  
+  /* Force main to be at least the full height of the viewport 
+     minus your navbar height (adjust 64px to your actual nav height) */
+  min-height: calc(100vh - 64px) !important;
+  
+  /* If main is still too small, this forces it to stretch */
+  flex-grow: 1 !important;
 }

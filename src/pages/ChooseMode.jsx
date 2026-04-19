@@ -75,8 +75,8 @@ export default function ChooseMode() {
                         onClick={() => {
                             if (mode.id === 'commuter') {
                                 navigate('/dashboard/plan-your-journey'); 
-                            } else {
-                                console.log(`Navigating to ${mode.title}`);
+                            } else if (mode.id === 'researcher') {
+                                navigate('/dashboard/analytics'); 
                             }
                         }}
                     />

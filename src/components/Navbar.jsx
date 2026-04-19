@@ -12,7 +12,7 @@ const Navbar = () => {
       <div className={styles.links}>
         <div className={styles.toggle}>
           <Link
-            to="/dashboard/plan"
+            to="/dashboard/plan-your-journey"
             className={`${styles.toggleBtn} ${!isAnalytics ? styles.active : ''}`}
           >
             Plan Journey

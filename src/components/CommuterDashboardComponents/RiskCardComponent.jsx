@@ -14,35 +14,58 @@ const LINE_THEMES = {
   default: { name: "Transit Line", brandColor: "#64748B" },
 };
 
-function getRiskConfig(score) {
-  if (score >= 70) {
-    return {
-      label: "High Risk",
-      color: "#DC2626",
-      info: "Heavy delays or cancellations are more likely.",
-    };
-  }
-  if (score >= 30) {
-    return {
-      label: "Moderate Risk",
-      color: "#D97706",
-      info: "Minor delays are possible. Allow buffer time.",
-    };
-  }
-  return {
-    label: "Low Risk",
-    color: "#059669",
-    info: "Conditions suggest stable and reliable service.",
-  };
+function formatRiskPercent(risk) {
+  if (typeof risk !== "number") return 0;
+  return Math.round(risk * 100);
 }
 
-export default function RiskCard({ lineId = "T1", score = 0 }) {
-  const risk = getRiskConfig(score);
+function getRiskConfig(riskLevel) {
+  switch (riskLevel?.toLowerCase()) {
+    case "high":
+      return {
+        label: "High Risk",
+        color: "#DC2626",
+        info: "Heavy delays or cancellations are more likely.",
+      };
+    case "moderate":
+      return {
+        label: "Moderate Risk",
+        color: "#D97706",
+        info: "Minor delays are possible. Allow buffer time.",
+      };
+    case "low":
+    default:
+      return {
+        label: "Low Risk",
+        color: "#059669",
+        info: "Conditions suggest stable and reliable service.",
+      };
+  }
+}
+
+function formatDisplayDate(dateString) {
+  if (!dateString) return "Forecast";
+
+  const date = new Date(dateString);
+  return date.toLocaleDateString("en-AU", {
+    weekday: "short",
+    day: "numeric",
+    month: "short",
+  });
+}
+
+export default function RiskCard({
+  lineId = "T1",
+  forecastDay,
+}) {
   const line = LINE_THEMES[lineId] || LINE_THEMES.default;
+
+  const percent = formatRiskPercent(forecastDay?.risk);
+  const risk = getRiskConfig(forecastDay?.risk_level);
 
   return (
     <div className="w-full">
-      <div className="rounded-[28px] border border-slate-200 bg-[linear-gradient(180deg,#ffffff_0%,#f8fafc_100%)] p-6 md:p-8 shadow-[0_16px_40px_rgba(15,23,42,0.06)]">
+      <div className="rounded-[28px] border border-slate-200 bg-[linear-gradient(180deg,#ffffff_0%,#f8fafc_100%)] p-6 shadow-[0_16px_40px_rgba(15,23,42,0.06)] md:p-8">
         {/* Top row */}
         <div className="mb-8 flex items-start justify-between gap-4">
           <div className="flex items-center gap-4">
@@ -67,7 +90,7 @@ export default function RiskCard({ lineId = "T1", score = 0 }) {
             className="rounded-full border border-slate-200 bg-white px-3 py-1 text-[11px] font-semibold uppercase tracking-wide"
             style={{ color: line.brandColor }}
           >
-            Tomorrow
+            {formatDisplayDate(forecastDay?.date)}
           </span>
         </div>
 
@@ -75,7 +98,7 @@ export default function RiskCard({ lineId = "T1", score = 0 }) {
         <div className="mb-8 grid gap-6 md:grid-cols-[1.2fr_0.8fr] md:items-end">
           <div className="flex items-end gap-2">
             <span className="text-6xl font-bold leading-none tracking-tight text-slate-950 md:text-7xl">
-              {score}
+              {percent}
             </span>
             <span className="pb-2 text-2xl font-medium text-slate-400">%</span>
           </div>
@@ -87,8 +110,34 @@ export default function RiskCard({ lineId = "T1", score = 0 }) {
             >
               {risk.label}
             </p>
-            <p className="text-sm leading-6 text-slate-600">{risk.info}</p>
+            <p className="text-sm leading-6 text-slate-600">
+              {forecastDay?.message || risk.info}
+            </p>
           </div>
+        </div>
+
+        {/* Weather summary chips */}
+        <div className="mb-8 flex flex-wrap gap-2">
+          {forecastDay?.weather_summary && (
+            <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600">
+              {forecastDay.weather_summary}
+            </span>
+          )}
+          {forecastDay?.rainSeverity && (
+            <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600">
+              {forecastDay.rainSeverity}
+            </span>
+          )}
+          {forecastDay?.windSeverity && (
+            <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600">
+              {forecastDay.windSeverity}
+            </span>
+          )}
+          {forecastDay?.humiditySeverity && (
+            <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600">
+              {forecastDay.humiditySeverity}
+            </span>
+          )}
         </div>
 
         {/* Progress */}
@@ -98,7 +147,7 @@ export default function RiskCard({ lineId = "T1", score = 0 }) {
               Disruption probability
             </span>
             <span className="text-xs font-medium text-slate-500">
-              Based on predicted conditions
+              Based on forecasted conditions
             </span>
           </div>
 
@@ -106,7 +155,7 @@ export default function RiskCard({ lineId = "T1", score = 0 }) {
             <div
               className="h-full rounded-full transition-all duration-700"
               style={{
-                width: `${score}%`,
+                width: `${percent}%`,
                 backgroundColor: line.brandColor,
               }}
             />
