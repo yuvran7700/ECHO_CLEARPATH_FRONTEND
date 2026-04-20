@@ -8,7 +8,6 @@ import {
 } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import WeeklyInteractiveRiskCard from "../components/CommuterDashboardComponents/WeekRiskInteractiveCard";
-import NSWInteractiveRailMap from "../components/CommuterDashboardComponents/NSWTrainLineMap";
 import CommuterDashboardSkeleton from "@/components/CommuterDashboardComponents/CommuterDashboardSkeleton";
 const LINE_META = {
     T1: "North Shore & Western Line",
