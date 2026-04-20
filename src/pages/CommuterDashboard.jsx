@@ -129,7 +129,7 @@ export default function CommuterDashboard() {
                         </DashboardSection>
                     </div>
 
-                    <div className="lg:col-span-1">
+                    {/* <div className="lg:col-span-1">
                         <DashboardSection
                             icon={MapIcon}
                             eyebrow="Context"
@@ -143,7 +143,7 @@ export default function CommuterDashboard() {
                                 />
                             </SectionCard>
                         </DashboardSection>
-                    </div>
+                    </div> */}
                 </div>
 
                 {/* Section 3: Summary or Action Items could go here, similar to InsightStrip */}

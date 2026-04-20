@@ -26,6 +26,7 @@ import SelectedLineSummaryCard from "@/components/AnalyticsDashboardComponents/S
 import { useAnalyticsData } from "@/hooks/useAnalyticsData";
 import AnalyticsDashboardSkeleton from "@/components/AnalyticsDashboardComponents/AnalyticsDashboardSkeleton";
 import LineSelector from "@/components/SharedComponents/LineSelector";
+import ApiDocButton from "@/components/ApiComponents/ApiDocButton";
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
 function percent(value) {
@@ -324,7 +325,7 @@ export default function AnalyticsDashboardPage() {
         
     return (
         <section className="w-full">
-            <div className="mx-auto flex w-full flex-col gap-10 px-4 py-2 md:px-6">
+            <div className="mx-auto flex w-full flex-col gap-10 px-4 py-8 md:px-6">
                 <DashboardSection
                     icon={Activity}
                     eyebrow="Selected context"
@@ -381,6 +382,8 @@ export default function AnalyticsDashboardPage() {
                 >
                     <ReliabilitySummary data={analytics} />
                 </DashboardSection>
+
+                <ApiDocButton />
             </div>
         </section>
     );

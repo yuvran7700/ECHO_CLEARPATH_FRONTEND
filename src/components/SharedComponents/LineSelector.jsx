@@ -30,8 +30,6 @@ const LINES = [
 ];
 
 export default function LineSelector({
-    title = "Select line",
-    description = "Choose a Sydney Trains line to view its forecast and analytics.",
     className = "",
 }) {
     const { selectedLineId, handleLineSelect } = useForecast();
@@ -53,20 +51,13 @@ export default function LineSelector({
     }
 
     return (
-        <div className={`space-y-4 ${className}`}>
-            <div className="space-y-1">
-                <h3 className="text-base font-semibold tracking-tight text-foreground">
-                    {title}
-                </h3>
-                <p className="text-sm text-muted-foreground">{description}</p>
-            </div>
-
+        <div className={className}>
             <Select value={selectedLineId} onValueChange={handleChange}>
                 <SelectTrigger className="h-12 w-full max-w-lg rounded-2xl border-black/10 bg-white px-4 text-left shadow-sm">
                     <SelectValue>
                         {selectedLine
                             ? `${selectedLine.id} — ${selectedLine.name}`
-                            : "Select a line"}
+                            : "Choose a train line..."}
                     </SelectValue>
                 </SelectTrigger>
 
