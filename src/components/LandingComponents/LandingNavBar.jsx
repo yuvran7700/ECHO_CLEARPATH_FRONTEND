@@ -26,8 +26,8 @@ const handleNavClick = (item) => {
       }
     }
 
-    if (item === 'View API Docs') {
-      window.open('https://your-docs-link.com', '_blank');
+    if (item === 'Intergate our API') {
+      window.open('https://yuvran7700.github.io/clearpath-docs/', '_blank');
     }
   };
 

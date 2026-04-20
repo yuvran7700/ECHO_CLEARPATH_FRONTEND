@@ -36,14 +36,14 @@ export default function ChooseMode() {
         {
             id: 'commuter',
             icon: '🚗',
-            title: 'Commuter',
+            title: 'Plan my Journey',
             accentColor: 'blue',
             description: <>Check real-time <span className="font-semibold text-blue-600">risk levels</span> for your transit lines based on live weather and social data.</>
         },
         {
             id: 'researcher',
             icon: '📊',
-            title: 'Researcher',
+            title: 'Explore Data',
             accentColor: 'purple',
             description: <>Analyze the <span className="font-semibold text-purple-600">correlation statistics</span> and historical evidence behind our transit predictions.</>
         },
@@ -77,8 +77,11 @@ export default function ChooseMode() {
                                 navigate('/dashboard/plan-your-journey'); 
                             } else if (mode.id === 'researcher') {
                                 navigate('/dashboard/analytics'); 
-                            }
-                        }}
+                            } 
+                            else if (mode.id === 'developer') {
+                                navigate('/api-doc'); 
+                        }
+                    }}
                     />
                 ))}
             </section>
