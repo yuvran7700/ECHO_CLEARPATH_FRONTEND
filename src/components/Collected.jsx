@@ -204,13 +204,17 @@ const Collected = () => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.left}>
-        <h2 className={styles.title}>/collection</h2>
+        <h1 className={styles.title}>/collection</h1>
         <p className={styles.description}>
           Returns the ADAGE 3.0 compliant weather object for a specific date. All data is taken from the bureau of meteorology taken from primarily Observatory Hill in Sydney NSW.
         </p>
         <p className={styles.description}>
           If data was unavailable (i.e. error, not taken etc), it’s parameter is a string with content “Unavailable”.
         </p>
+
+        <h2 className={styles.title}>Paramaters</h2>
+        <p className={styles.title}>Date - Date of desired Weather Data</p>
+        <h3 className={styles.title}>Object Returned</h3>
         <AccordianObjectS  items={items} />
       </div>
 

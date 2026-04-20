@@ -1,285 +1,426 @@
+import React from "react";
 import { motion } from "framer-motion";
-import Footer from './Footer';
+import {
+    ArrowRight,
+    TrainFront,
+    BarChart3,
+    Code2,
+    Clock3,
+    CloudRain,
+    ShieldCheck,
+    Smartphone,
+    Activity,
+    Database,
+} from "lucide-react";
+import Footer from "./Footer";
 
-const sectionReveal = {
-    hidden: { opacity: 0, y: 60, filter: "blur(10px)" },
+// --- Animation Variants ---
+
+const reveal = {
+    hidden: { opacity: 0, y: 50, filter: "blur(8px)" },
     visible: {
         opacity: 1,
         y: 0,
         filter: "blur(0px)",
-        transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
+        transition: { duration: 0.75, ease: [0.16, 1, 0.3, 1] },
     },
 };
 
-const staggerContainer = {
+const stagger = {
     hidden: {},
     visible: {
-        transition: { staggerChildren: 0.12 },
+        transition: { staggerChildren: 0.1 },
     },
 };
 
 const cardReveal = {
-    hidden: { opacity: 0, y: 40, scale: 0.97 },
+    hidden: { opacity: 0, y: 30, scale: 0.98 },
     visible: {
         opacity: 1,
         y: 0,
         scale: 1,
-        transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] },
+        transition: { duration: 0.65, ease: [0.16, 1, 0.3, 1] },
     },
 };
 
-const featureCards = [
+// --- Data ---
+
+const valuePillars = [
     {
-        tag: "For commuters",
-        title: "Plan your journey",
+        icon: Clock3,
+        eyebrow: "Earlier visibility",
+        title: "Plan before disruption starts",
         description:
-            "Check disruption risk before you travel and understand what it means for your route.",
-        items: [
-            "Line-based disruption predictions (T1, etc.)",
-            "Tomorrow’s delay risk with % confidence",
-            "Clear commuter guidance",
-            "Alternative route planning",
-            "Interactive network map",
-        ],
-        button: "Plan your journey",
+            "ClearPath shifts users from reactive alerts to proactive planning by surfacing likely disruption risk before the journey begins.",
     },
     {
-        tag: "For researchers & developers",
-        title: "Explore disruption data",
+        icon: BarChart3,
+        eyebrow: "Decision support",
+        title: "Turn raw patterns into usable insight",
         description:
-            "Analyse disruption patterns, environmental impact, and integrate predictions into your tools.",
-        items: [
-            "Real-time disruption risk scoring",
-            "Rainfall impact & environmental metrics",
-            "Disruption trends & summaries",
-            "Rainfall vs disruption visualisation",
-            "API documentation & integration",
-        ],
-        button: "Explore data",
+            "Historical trends, threshold analysis, and risk summaries help users understand not just what might happen, but why.",
+    },
+    {
+        icon: Code2,
+        eyebrow: "Platform extension",
+        title: "Go beyond the dashboard",
+        description:
+            "Swagger, API documentation, and integration guides make ClearPath useful for teams building apps, tools, and internal workflows.",
     },
 ];
 
-const steps = [
+const surfaces = [
     {
-        step: "01",
-        title: "Collect source data",
-        cards: [
-            {
-                title: "Weather signals",
-                text: "Historical and real-time weather data from BOM including rainfall and environmental conditions.",
-            },
-            {
-                title: "Transport alerts",
-                text: "Disruption data from transport feeds capturing delays, cancellations, and interruptions.",
-            },
+        tag: "Commuter mode",
+        title: "Trip planning with predictive risk",
+        description:
+            "A traveller-facing dashboard that combines 5-day forecast visibility, risk scores, weather conditions, and line selection into one clear planning flow.",
+        bullets: [
+            "5-day disruption risk forecast",
+            "Selected train line controls",
+            "Daily risk level and score",
+            "Weather conditions at a glance",
+            "Clear guidance for immediate action",
         ],
-        dark: false,
     },
     {
-        step: "02",
-        title: "Standardise and store",
-        cards: [
-            {
-                title: "ADAGE modelling",
-                text: "Inputs are transformed into structured ADAGE 3.0 JSON objects for interoperability.",
-            },
-            {
-                title: "Historical dataset",
-                text: "Normalised records are stored for long-term transport and weather intelligence.",
-            },
+        tag: "Analytics mode",
+        title: "Operational and historical insight",
+        description:
+            "An analytics surface that explains what stands out in the dataset, how disruption behaves over time, and which conditions are most strongly associated with issues.",
+        bullets: [
+            "Day-of-week and monthly charts",
+            "Trend over time visualisation",
+            "Weather severity comparisons",
+            "Threshold-based insight cards",
+            "Historical disruption rate exploration",
         ],
-        dark: false,
     },
     {
-        step: "03",
-        title: "Correlate and predict",
-        cards: [
-            {
-                title: "Pattern analysis",
-                text: "Find relationships between weather conditions and disruption events across lines.",
-            },
-            {
-                title: "Risk scoring",
-                text: "Combine real-time weather with historical patterns to generate disruption probabilities.",
-            },
-        ],
-        dark: false,
-    },
-    {
-        step: "04",
-        title: "Deliver insights",
-        dark: true,
-        cards: [
-            {
-                title: "Commuters",
-                text: "Plan alternative routes before delays begin using predictive disruption insights.",
-            },
-            {
-                title: "Transport teams",
-                text: "Improve staffing and operational decisions with predictive visibility.",
-            },
-            {
-                title: "External systems",
-                text: "Access structured data via APIs and integrations.",
-            },
+        tag: "Developer mode",
+        title: "Documentation built into the product",
+        description:
+            "The platform includes structured API access, Swagger, and integration guides so external systems can consume and build on ClearPath outputs.",
+        bullets: [
+            "Endpoint documentation",
+            "Swagger access",
+            "Integration guides",
+            "Example requests and responses",
+            "Developer entry from the product nav",
         ],
     },
 ];
 
-// -----------------------------
-// COMPONENTS
-// -----------------------------
-function FeatureCard({ feature }) {
+const outcomes = [
+    {
+        icon: TrainFront,
+        title: "For commuters",
+        text: "Reduce uncertainty by giving users time to adjust their plans before disruption begins.",
+    },
+    {
+        icon: Activity,
+        title: "For operators and analysts",
+        text: "Expose patterns across weather and disruption history so teams can interpret risk more clearly.",
+    },
+    {
+        icon: Code2,
+        title: "For developers",
+        text: "Deliver data in a form that can be integrated into dashboards, tools, and future workflows.",
+    },
+    {
+        icon: ShieldCheck,
+        title: "For trust and usability",
+        text: "Support loading states, unavailable data, and unsupported features so the product remains understandable.",
+    },
+];
+
+const platformDepth = [
+    {
+        icon: CloudRain,
+        title: "Forecast depth",
+        text: "Daily disruption probability, risk level, and weather conditions across a 5-day window.",
+    },
+    {
+        icon: BarChart3,
+        title: "Analytics depth",
+        text: "Historical rate by weekday, month, severity, and trends over time.",
+    },
+    {
+        icon: Database,
+        title: "Documentation depth",
+        text: "API references, Swagger, and integration guidance built into the same product ecosystem.",
+    },
+    {
+        icon: Smartphone,
+        title: "UX depth",
+        text: "Responsive layouts, state feedback, and controlled feature availability for real-world use.",
+    },
+];
+
+// --- Sub-components ---
+
+function ValueCard({ icon: Icon, eyebrow, title, description }) {
     return (
         <motion.div
             variants={cardReveal}
-            whileHover={{ y: -6 }}
-            className="rounded-[40px] border border-neutral-200 bg-neutral-50 p-10 min-h-[380px] hover:bg-neutral-100 transition-colors flex flex-col justify-between"
+            className="rounded-[32px] border border-neutral-200 bg-neutral-50 p-8"
+        >
+            <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-950 text-white">
+                <Icon className="h-5 w-5" />
+            </div>
+
+            <p className="mb-3 text-xs uppercase tracking-[0.22em] text-orange-600">
+                {eyebrow}
+            </p>
+
+            <h3 className="text-2xl font-semibold tracking-tight text-black">
+                {title}
+            </h3>
+
+            <p className="mt-4 text-[15px] leading-7 text-neutral-600">
+                {description}
+            </p>
+        </motion.div>
+    );
+}
+
+function SurfaceCard({ tag, title, description, bullets }) {
+    return (
+        <motion.div
+            variants={cardReveal}
+            whileHover={{ y: -4 }}
+            className="flex min-h-[380px] flex-col justify-between rounded-[36px] border border-neutral-200 bg-white p-8 shadow-[0_10px_40px_rgba(0,0,0,0.04)]"
         >
             <div>
-                <p className="text-xs uppercase tracking-[0.25em] text-sky-700 mb-3">
-                    {feature.tag}
+                <p className="mb-3 text-xs uppercase tracking-[0.22em] text-orange-600">
+                    {tag}
                 </p>
 
-                <h3 className="text-3xl font-semibold mb-4">
-                    {feature.title}
+                <h3 className="text-3xl font-semibold tracking-tight text-black">
+                    {title}
                 </h3>
 
-                <p className="text-neutral-600 text-lg mb-6">
-                    {feature.description}
+                <p className="mt-4 text-[15px] leading-7 text-neutral-600">
+                    {description}
                 </p>
 
-                <ul className="space-y-3 text-neutral-700">
-                    {feature.items.map((item, i) => (
-                        <li key={i}>• {item}</li>
+                <ul className="mt-6 space-y-3 text-[15px] text-neutral-700">
+                    {bullets.map((item) => (
+                        <li key={item}>• {item}</li>
                     ))}
                 </ul>
             </div>
-
-            <button className="mt-8 self-start rounded-full bg-slate-950 text-white px-6 py-3 text-sm font-medium hover:opacity-90 transition">
-                {feature.button}
-            </button>
+            
         </motion.div>
     );
 }
 
-function Step({ step }) {
+function OutcomeCard({ icon: Icon, title, text }) {
     return (
-        <motion.div variants={cardReveal}>
-            <div
-                className={`rounded-[36px] border p-8 md:p-10 ${
-                    step.dark
-                        ? "bg-slate-950 text-white border-slate-900"
-                        : "bg-neutral-50 border-neutral-200"
-                }`}
-            >
-                <div className="flex flex-col md:flex-row md:justify-between gap-6">
-                    <div className="md:max-w-xs">
-                        <p
-                            className={`text-xs uppercase tracking-[0.22em] mb-3 ${
-                                step.dark ? "text-sky-300" : "text-sky-700"
-                            }`}
-                        >
-                            Step {step.step}
-                        </p>
-
-                        <h3 className="text-3xl font-semibold tracking-tight">
-                            {step.title}
-                        </h3>
-                    </div>
-
-                    <div className="flex-1 grid md:grid-cols-2 gap-4">
-                        {step.cards.map((card, i) => (
-                            <div
-                                key={i}
-                                className={`rounded-3xl border p-6 ${
-                                    step.dark
-                                        ? "bg-white/5 border-white/10"
-                                        : "bg-white border-neutral-200"
-                                }`}
-                            >
-                                <h4 className="text-lg font-semibold mb-2">
-                                    {card.title}
-                                </h4>
-                                <p
-                                    className={
-                                        step.dark
-                                            ? "text-white/70 leading-7"
-                                            : "text-neutral-600 leading-7"
-                                    }
-                                >
-                                    {card.text}
-                                </p>
-                            </div>
-                        ))}
-                    </div>
-                </div>
+        <motion.div
+            variants={cardReveal}
+            className="rounded-[28px] border border-neutral-200 bg-neutral-50 p-6"
+        >
+            <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-2xl bg-orange-100 text-orange-600">
+                <Icon className="h-5 w-5" />
             </div>
+            <h4 className="text-lg font-semibold tracking-tight text-black">
+                {title}
+            </h4>
+            <p className="mt-3 text-sm leading-7 text-neutral-600">{text}</p>
         </motion.div>
     );
 }
 
-export default function FeatureSection() {
+function DepthCard({ icon: Icon, title, text }) {
     return (
-        <section id="feature-section" className="relative z-30 bg-white text-black px-8 py-32 rounded-t-[60px] -mt-40">
-            <div className="max-w-6xl mx-auto">
+        <motion.div
+            variants={cardReveal}
+            className="rounded-[28px] border border-white/10 bg-white/5 p-6 backdrop-blur-sm"
+        >
+            <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-2xl bg-white/10 text-white">
+                <Icon className="h-5 w-5" />
+            </div>
+            <h4 className="text-lg font-semibold tracking-tight text-white">
+                {title}
+            </h4>
+            <p className="mt-3 text-sm leading-7 text-white/70">{text}</p>
+        </motion.div>
+    );
+}
 
-                <motion.h2
-                    variants={sectionReveal}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, margin: "-100px" }}
-                    className="text-5xl font-bold tracking-tight mb-12"
-                >
-                    Everything you need <br /> to stay on track.
-                </motion.h2>
+// --- Main Component ---
 
+export default function PlatformValueSection() {
+    return (
+        <section className="relative z-30 -mt-32 rounded-t-[64px] bg-white text-black">
+            <div className="mx-auto max-w-7xl px-8 py-28">
                 <motion.div
-                    variants={staggerContainer}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, margin: "-100px" }}
-                    className="grid md:grid-cols-2 gap-8"
-                >
-                    {featureCards.map((feature, i) => (
-                        <FeatureCard key={i} feature={feature} />
-                    ))}
-                </motion.div>
-
-                <motion.div
-                    variants={sectionReveal}
+                    variants={reveal}
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true, margin: "-120px" }}
-                    className="mt-32 max-w-3xl mb-16"
+                    className="max-w-4xl"
                 >
-                    <p className="text-xs uppercase tracking-[0.25em] text-sky-700 mb-4">
-                        Data Flow
+                    <p className="mb-4 text-xs uppercase tracking-[0.25em] text-orange-600">
+                        Business value
                     </p>
 
-                    <h2 className="text-5xl font-bold tracking-tight mb-6">
-                        From raw signals to actionable predictions.
+                    <h2 className="text-5xl font-bold tracking-tight md:text-6xl">
+                        A transport intelligence platform,
+                        <br />
+                        not just a forecast screen.
                     </h2>
 
-                    <p className="text-lg text-neutral-600 leading-8">
-                        ClearPath transforms transport and weather data into structured predictive intelligence.
+                    <p className="mt-6 max-w-3xl text-lg leading-8 text-neutral-600">
+                        ClearPath creates value by helping commuters act earlier, giving
+                        analysts richer disruption insight, and exposing developer-ready
+                        integration surfaces — all within one connected product experience.
                     </p>
                 </motion.div>
 
                 <motion.div
-                    variants={staggerContainer}
+                    variants={stagger}
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true, margin: "-100px" }}
-                    className="grid gap-6"
+                    className="mt-14 grid gap-6 lg:grid-cols-3"
                 >
-                    {steps.map((step, i) => (
-                        <Step key={i} step={step} />
+                    {valuePillars.map((card) => (
+                        <ValueCard key={card.title} {...card} />
                     ))}
                 </motion.div>
+
+                <motion.div
+                    variants={reveal}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: "-100px" }}
+                    className="mt-28 max-w-4xl"
+                >
+                    <p className="mb-4 text-xs uppercase tracking-[0.25em] text-orange-600">
+                        Product surfaces
+                    </p>
+                    <h2 className="text-4xl font-bold tracking-tight md:text-5xl">
+                        Built across commuter, analytics, and developer workflows.
+                    </h2>
+                    <p className="mt-5 max-w-3xl text-lg leading-8 text-neutral-600">
+                        The platform now spans the full front-end journey: landing, mode
+                        selection, operational dashboards, API documentation, and
+                        integration guidance.
+                    </p>
+                </motion.div>
+
+                <motion.div
+                    variants={stagger}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: "-100px" }}
+                    className="mt-12 grid gap-6 xl:grid-cols-3"
+                >
+                    {surfaces.map((surface) => (
+                        <SurfaceCard key={surface.title} {...surface} />
+                    ))}
+                </motion.div>
+
+                <motion.div
+                    variants={reveal}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: "-100px" }}
+                    className="mt-28 grid gap-10 lg:grid-cols-[0.9fr_1.1fr]"
+                >
+                    <div>
+                        <p className="mb-4 text-xs uppercase tracking-[0.25em] text-orange-600">
+                            Why it matters
+                        </p>
+                        <h2 className="text-4xl font-bold tracking-tight md:text-5xl">
+                            Designed to create practical value for every audience.
+                        </h2>
+                        <p className="mt-5 text-lg leading-8 text-neutral-600">
+                            ClearPath is valuable because it connects predictive insight to
+                            action. It helps people decide, interpret, and integrate — not
+                            just observe.
+                        </p>
+                    </div>
+
+                    <motion.div variants={stagger} className="grid gap-4 sm:grid-cols-2">
+                        {outcomes.map((item) => (
+                            <OutcomeCard key={item.title} {...item} />
+                        ))}
+                    </motion.div>
+                </motion.div>
             </div>
+
+            <section className="bg-[#08111d] text-white">
+                <div className="mx-auto max-w-7xl px-8 py-24">
+                    <motion.div
+                        variants={reveal}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, margin: "-100px" }}
+                        className="max-w-4xl"
+                    >
+                        <p className="mb-4 text-xs uppercase tracking-[0.25em] text-orange-400">
+                            Depth of implementation
+                        </p>
+                        <h2 className="text-4xl font-bold tracking-tight md:text-5xl">
+                            Credible because it goes deeper than a simple UI.
+                        </h2>
+                        <p className="mt-5 max-w-3xl text-lg leading-8 text-white/70">
+                            The value of the platform is reinforced by the depth of the
+                            implementation: multi-day forecasting, historical charting,
+                            developer documentation, clear system states, and responsive
+                            design.
+                        </p>
+                    </motion.div>
+
+                    <motion.div
+                        variants={stagger}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, margin: "-100px" }}
+                        className="mt-12 grid gap-5 md:grid-cols-2 xl:grid-cols-4"
+                    >
+                        {platformDepth.map((item) => (
+                            <DepthCard key={item.title} {...item} />
+                        ))}
+                    </motion.div>
+
+                    <motion.div
+                        variants={reveal}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, margin: "-80px" }}
+                        className="mt-14 rounded-[36px] border border-white/10 bg-white/5 p-8 backdrop-blur-sm"
+                    >
+                        <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end">
+                            <div>
+                                <p className="text-xs uppercase tracking-[0.25em] text-orange-400">
+                                    Platform summary
+                                </p>
+                                <h3 className="mt-3 text-3xl font-semibold tracking-tight text-white">
+                                    ClearPath helps users plan earlier, analyse deeper, and build
+                                    further.
+                                </h3>
+                                <p className="mt-4 max-w-3xl text-base leading-8 text-white/70">
+                                    That combination is the real business value: a product that
+                                    supports immediate commuter decisions, broader operational
+                                    understanding, and future platform extension through APIs and
+                                    documentation.
+                                </p>
+                            </div>
+
+                            <button className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-medium text-black transition hover:opacity-90">
+                                Explore ClearPath
+                                <ArrowRight className="h-4 w-4" />
+                            </button>
+                        </div>
+                    </motion.div>
+                </div>
+            </section>
+
             <Footer />
         </section>
-        
     );
 }

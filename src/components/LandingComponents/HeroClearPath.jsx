@@ -4,7 +4,8 @@ import CloudBackground from './CloudBackground'
 import { ContainerScroll } from '../ui/container-scroll-animation';
 import BrowserFrame from './BrowserFrame';
 import FeatureSection from './FeatureSection';
-
+import commuterPreview from "../../assets/commuter_dashboard.png";
+import analyticsPreview from "../../assets/analytics_dashboard.png";
 
 function HeroSection() {
     const itemVariants = {
@@ -72,14 +73,14 @@ export default function HeroClearPath() {
     const containerRef = useRef(null);
 
     const viewImages = {
-        commuter: "https://images.unsplash.com/photo-1741806914412-340ca16e9175?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        research: "https://images.unsplash.com/photo-1675937338222-b834fce80ba5?q=80&w=1056&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        commuter: commuterPreview,
+        research: analyticsPreview,
     };
 
     return (
         <main id="about-section" ref={containerRef} className="relative w-full bg-[#07111f] text-white">
             <div className="fixed inset-0 z-0">
-                <CloudBackground stage={2} />
+                <CloudBackground stage={3} />
             </div>
 
             <HeroSection />

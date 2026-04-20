@@ -33,7 +33,7 @@ const handleNavClick = (item) => {
 
 
   // Stage 0 (storm) = dark bg → light text. Stages 1 & 2 = light/teal bg → dark text
-  const isDark = stage === 0
+  const isDark = stage === 0 || stage === 2
 
   return (
     <nav className="absolute top-0 left-0 right-0 z-50 flex justify-center pt-5 md:pt-7">

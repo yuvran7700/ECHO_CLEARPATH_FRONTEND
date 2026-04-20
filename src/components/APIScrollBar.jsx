@@ -13,6 +13,11 @@ const sections = [
   { label: 'Weather Microservice', type: 'heading' },
   { label: '\\collected',       href: '/api-doc/collected',          type: 'external' },
   { label: '\\processed',       href: '/dashboard', type: 'external' },
+  { label: 'Alert Microservice', type: 'heading' },
+  { label: '\\collection',       href: '/api-doc/collected',          type: 'external' },
+  { label: 'Transport Microservice', type: 'heading' },
+  { label: '\\disruption-forecast',       href: '/api-doc/collected',          type: 'external' },
+  { label: '\\disruption-analytics',       href: '/dashboard', type: 'external' },
 ]
 
 
@@ -73,7 +78,7 @@ const DocsSidebar = () => {
         }
 
         return (
-           <Link
+          <Link
           key={section.href}
           to={section.href}
           onClick={() => setMobileOpen(false)}
