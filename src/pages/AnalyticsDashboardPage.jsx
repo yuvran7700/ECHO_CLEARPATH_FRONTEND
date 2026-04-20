@@ -24,7 +24,7 @@ import WeatherThresholdPanel from "@/components/AnalyticsDashboardComponents/Wea
 import TemporalPatternsPanel from "@/components/AnalyticsDashboardComponents/TemporalCharts";
 import SelectedLineSummaryCard from "@/components/AnalyticsDashboardComponents/SelectedLineSummaryCard";
 import { useAnalyticsData } from "@/hooks/useAnalyticsData";
-
+import AnalyticsDashboardSkeleton from "@/components/AnalyticsDashboardComponents/AnalyticsDashboardSkeleton";
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
 function percent(value) {
@@ -88,82 +88,6 @@ function DashboardSection({ icon: Icon, eyebrow, title, description, children })
         </div>
     );
 }
-
-// ─── Overview Cards ──────────────────────────────────────────────────────────
-
-// function OverviewCards({ data }) {
-//     const allTimeDays = data.best_worst_day_of_week.all_time;
-//     const allTimeMonths = data.best_worst_month.all_time;
-
-//     const safestDay = getBestDay(data);
-//     const worstMonth = getWorstMonth(data);
-
-//     const cards = [
-//         {
-//             title: "Overall disruption rate",
-//             value: percent(data.overall.overall_disruption_rate),
-//             description: `${data.overall.total_disruption_days} disruption days out of ${data.overall.total_days}`,
-//             icon: AlertTriangle,
-//             tint: "bg-orange-50 text-orange-600 border-orange-100",
-//         },
-//         {
-//             title: "Safest day",
-//             value: allTimeDays.best,
-//             description: `${percent(safestDay.disruption_rate)} disruption rate`,
-//             icon: CalendarDays,
-//             tint: "bg-emerald-50 text-emerald-600 border-emerald-100",
-//         },
-//         {
-//             title: "Worst month",
-//             value: allTimeMonths.worst,
-//             description: `${percent(worstMonth.disruption_rate)} disruption rate`,
-//             icon: TrendingUp,
-//             tint: "bg-rose-50 text-rose-600 border-rose-100",
-//         },
-//         {
-//             title: "Strongest weather signal",
-//             value: getWorstWeatherSignal(data.weather_threshold_analysis),
-//             description: "Highest disruption rate at extreme thresholds",
-//             icon: CloudRain,
-//             tint: "bg-amber-50 text-amber-600 border-amber-100",
-//         },
-//     ];
-
-//     return (
-//         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-//             {cards.map((card) => (
-//                 <MetricCard key={card.title} {...card} />
-//             ))}
-//         </div>
-//     );
-// }
-
-// function MetricCard({ title, value, description, icon: Icon, tint }) {
-//     return (
-//         <SectionCard className="h-full">
-//             <CardHeader className="pb-3">
-//                 <div className="flex items-start justify-between gap-3">
-//                     <div className="min-w-0">
-//                         <CardDescription className="text-[11px] uppercase tracking-[0.18em]">
-//                             {title}
-//                         </CardDescription>
-//                         <CardTitle className="mt-2 text-2xl font-semibold tracking-tight">
-//                             {value}
-//                         </CardTitle>
-//                     </div>
-
-//                     <div className={`shrink-0 rounded-2xl border p-2.5 ${tint}`}>
-//                         <Icon className="h-4 w-4" />
-//                     </div>
-//                 </div>
-//             </CardHeader>
-
-//             <CardContent className="pt-0">
-//                 <p className="text-sm leading-6 text-muted-foreground">{description}</p>
-//             </CardContent>
-//         </SectionCard>
-//     );
-// }
 
 function OverviewCards({ data }) {
     const allTimeDays = data.best_worst_day_of_week.all_time;
@@ -393,7 +317,7 @@ export default function AnalyticsDashboardPage() {
 
     const { analytics, analyticsLoading, analyticsError } = useAnalyticsData();
 
-    if (analyticsLoading) return <p>Loading analytics...</p>;
+    if (analyticsLoading) return <AnalyticsDashboardSkeleton />;
     if (analyticsError) return <p>{analyticsError}</p>;
     if (!analytics) return <p>No analytics data found.</p>;
         

@@ -9,7 +9,7 @@ import {
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import WeeklyInteractiveRiskCard from "../components/CommuterDashboardComponents/WeekRiskInteractiveCard";
 import NSWInteractiveRailMap from "../components/CommuterDashboardComponents/NSWTrainLineMap";
-
+import CommuterDashboardSkeleton from "@/components/CommuterDashboardComponents/CommuterDashboardSkeleton";
 const LINE_META = {
     T1: "North Shore & Western Line",
     T2: "Leppington & Inner West Line",
@@ -61,18 +61,18 @@ function DashboardSection({ icon: Icon, eyebrow, title, description, children })
 
 export default function CommuterDashboard() {
     const {
-        data,
-        loading,
-        error,
-        selectedLineId,
-        setSelectedLineId,
-        selectedDayIndex,
-        setSelectedDayIndex,
-        selectedDay,
+    data,
+    forecastLoading,
+    forecastError,
+    selectedLineId,
+    setSelectedLineId,
+    selectedDayIndex,
+    setSelectedDayIndex,
+    selectedDay,
     } = useForecast();
 
-    if (loading) return <div className="flex h-96 items-center justify-center p-8 text-muted-foreground">Loading forecast...</div>;
-    if (error) return <div className="p-8 text-destructive">{error}</div>;
+    if (forecastLoading) return <CommuterDashboardSkeleton />;
+    if (forecastError) return <div className="p-8 text-destructive">{forecastError}</div>;
     if (!data || !selectedDay) return <div className="p-8">No forecast data available.</div>;
 
     const selectedLineName = LINE_META[selectedLineId] || "NSW Rail Line";
