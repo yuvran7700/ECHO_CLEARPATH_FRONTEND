@@ -25,6 +25,7 @@ import TemporalPatternsPanel from "@/components/AnalyticsDashboardComponents/Tem
 import SelectedLineSummaryCard from "@/components/AnalyticsDashboardComponents/SelectedLineSummaryCard";
 import { useAnalyticsData } from "@/hooks/useAnalyticsData";
 import AnalyticsDashboardSkeleton from "@/components/AnalyticsDashboardComponents/AnalyticsDashboardSkeleton";
+import LineSelector from "@/components/SharedComponents/LineSelector";
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
 function percent(value) {

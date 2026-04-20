@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import CurrentTime from '../CommuterDashboardComponents/CurrentTime';
-
+import LineSelector from './LineSelector';
 const DashboardHeader = () => {
     const location = useLocation();
     const [time, setTime] = useState(new Date());
@@ -40,6 +40,7 @@ const DashboardHeader = () => {
                     </div>
                     <CurrentTime />
                 </div>
+                <LineSelector />
             </div>
         </header>
     );

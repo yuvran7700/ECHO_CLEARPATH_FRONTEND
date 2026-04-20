@@ -14,8 +14,8 @@ export function useForecastData() {
             try {
                 setLoading(true);
 
-                const result = await fetchForecastData();
-                // const result = forecastStub;
+                // const result = await fetchForecastData();
+                const result = forecastStub;
 
                 if (isMounted) {
                     setData(result);
@@ -40,42 +40,4 @@ export function useForecastData() {
 
     return { data, loading, error };
 }
-
-//MOCK DATA TO SAVE API RATE LIMITS 
-
-// import { useEffect, useState } from "react";
-// import forecastStub from "../mocks/forecastStub";
-
-// export function useForecastData() {
-//   const [data, setData] = useState(null);
-//   const [loading, setLoading] = useState(true);
-//   const [error, setError] = useState("");
-
-//   const [selectedLineId, setSelectedLineId] = useState("T1");
-//   const [selectedDayIndex, setSelectedDayIndex] = useState(0);
-
-//   useEffect(() => {
-//     try {
-//       // pretend this came from the API
-//       setData(forecastStub);
-//     } catch (err) {
-//       setError("Failed to load forecast");
-//     } finally {
-//       setLoading(false);
-//     }
-//   }, []);
-
-//   const selectedDay = data?.days?.[selectedDayIndex] ?? null;
-
-//   return {
-//     data,
-//     loading,
-//     error,
-//     selectedLineId,
-//     setSelectedLineId,
-//     selectedDayIndex,
-//     setSelectedDayIndex,
-//     selectedDay,
-//   };
-// }
 

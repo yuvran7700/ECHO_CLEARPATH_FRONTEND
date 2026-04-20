@@ -15,8 +15,8 @@ useEffect(() => {
       setAnalyticsLoading(true);
       setAnalyticsError("");
 
-      const result = await fetchAnalyticsData();
-      // const result = analyticsData;
+      // const result = await fetchAnalyticsData();
+      const result = analyticsData;
 
       if (isMounted) {
         setAnalytics(result);
