@@ -20,8 +20,6 @@ function App() {
             <Route path="analytics" element={<AnalyticsDashboardPage />} />
             <Route index element={<Navigate to="plan-your-journey" replace />} />
           </Route>
-          {/* <Route path="/dashboard/plan-your-journey" element={<CommuterDashboard />} />
-          <Route path="/dashboard/analytics" element={<AnalyticsDashboardPage />} /> */}
           <Route path="/api-doc" element={<APIDoc />} />
           <Route path="/api-doc/collected" element={<APIDocCollected />} />
         </Routes>

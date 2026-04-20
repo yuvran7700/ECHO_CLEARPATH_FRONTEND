@@ -9,3 +9,14 @@ export async function fetchForecastData() {
 
     return response.json();
 }
+
+
+export async function fetchForecastAnalytics() {
+    const response = await fetch(`${API_URL}/transport/disruption-forecast/`);
+
+    if (!response.ok) {
+        throw new Error("Failed to fetch forecast data");
+    }
+
+    return response.json();
+}

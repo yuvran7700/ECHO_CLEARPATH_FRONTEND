@@ -6,6 +6,10 @@ import {
     CloudRain,
     TrendingUp,
     ArrowUpRight,
+    Sparkles,
+    BarChart3,
+    Activity,
+    FileText,
 } from "lucide-react";
 import {
     Card,
@@ -15,25 +19,12 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import {
-    ResponsiveContainer,
-    BarChart,
-    Bar,
-    XAxis,
-    YAxis,
-    Tooltip,
-    CartesianGrid,
-    LineChart,
-    Line,
-} from "recharts";
 
 import { analyticsData } from "@/mocks/analysisStub";
 import WeatherThresholdPanel from "@/components/AnalyticsDashboardComponents/WeatherChart";
-import SeasonalityPanel from "@/components/AnalyticsDashboardComponents/DisruptionMonthChart";
-import DayOfWeekPanelChart from "@/components/AnalyticsDashboardComponents/DayOfWeekPanel";
-import MonthSeasonalityPanel from "@/components/AnalyticsDashboardComponents/MonthSeasonalityPanel";
 import TemporalPatternsPanel from "@/components/AnalyticsDashboardComponents/TemporalCharts";
 import SelectedLineSummaryCard from "@/components/AnalyticsDashboardComponents/SelectedLineSummaryCard";
+
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
 function percent(value) {
@@ -60,23 +51,6 @@ function getWorstMonth(data) {
     return allTimeMonths.by_month.find((m) => m.label === allTimeMonths.worst);
 }
 
-// ─── Shared chart styles ─────────────────────────────────────────────────────
-
-const CHART_COLOR = "var(--chart-1)";
-const axisStyle = {
-    fontSize: 12,
-    fill: "var(--muted-foreground)",
-};
-
-const tooltipStyle = {
-    backgroundColor: "var(--card)",
-    border: "1px solid var(--border)",
-    borderRadius: 12,
-    fontSize: 12,
-    color: "var(--foreground)",
-    boxShadow: "0 8px 24px rgba(0,0,0,0.06)",
-};
-
 // ─── Small UI wrappers ───────────────────────────────────────────────────────
 
 function SectionCard({ className = "", children }) {
@@ -87,12 +61,30 @@ function SectionCard({ className = "", children }) {
     );
 }
 
-function ChartWrapper({ height = 280, children }) {
+function DashboardSection({ icon: Icon, eyebrow, title, description, children }) {
     return (
-        <div style={{ width: "100%", minWidth: 0, height }}>
-            <ResponsiveContainer width="100%" height="100%" minHeight={height}>
-                {children}
-            </ResponsiveContainer>
+        <div className="space-y-4">
+            <div className="space-y-2">
+                <div className="flex items-center gap-2 text-muted-foreground">
+                    <div className="rounded-full border bg-muted/50 p-2">
+                        <Icon className="h-4 w-4" />
+                    </div>
+                    <span className="text-[11px] font-medium uppercase tracking-[0.2em]">
+                        {eyebrow}
+                    </span>
+                </div>
+
+                <div>
+                    <h2 className="text-xl font-semibold tracking-tight text-foreground">
+                        {title}
+                    </h2>
+                    <p className="mt-1 text-sm leading-6 text-muted-foreground">
+                        {description}
+                    </p>
+                </div>
+            </div>
+
+            {children}
         </div>
     );
 }
@@ -112,24 +104,28 @@ function OverviewCards({ data }) {
             value: percent(data.overall.overall_disruption_rate),
             description: `${data.overall.total_disruption_days} disruption days out of ${data.overall.total_days}`,
             icon: AlertTriangle,
+            tint: "bg-orange-50 text-orange-600 border-orange-100",
         },
         {
             title: "Safest day",
             value: allTimeDays.best,
             description: `${percent(safestDay.disruption_rate)} disruption rate`,
             icon: CalendarDays,
+            tint: "bg-emerald-50 text-emerald-600 border-emerald-100",
         },
         {
             title: "Worst month",
             value: allTimeMonths.worst,
             description: `${percent(worstMonth.disruption_rate)} disruption rate`,
             icon: TrendingUp,
+            tint: "bg-rose-50 text-rose-600 border-rose-100",
         },
         {
             title: "Strongest weather signal",
             value: getWorstWeatherSignal(data.weather_threshold_analysis),
             description: "Highest disruption rate at extreme thresholds",
             icon: CloudRain,
+            tint: "bg-amber-50 text-amber-600 border-amber-100",
         },
     ];
 
@@ -142,7 +138,7 @@ function OverviewCards({ data }) {
     );
 }
 
-function MetricCard({ title, value, description, icon: Icon }) {
+function MetricCard({ title, value, description, icon: Icon, tint }) {
     return (
         <SectionCard className="h-full">
             <CardHeader className="pb-3">
@@ -156,8 +152,8 @@ function MetricCard({ title, value, description, icon: Icon }) {
                         </CardTitle>
                     </div>
 
-                    <div className="rounded-2xl bg-muted p-2.5 shrink-0">
-                        <Icon className="h-4 w-4 text-muted-foreground" />
+                    <div className={`shrink-0 rounded-2xl border p-2.5 ${tint}`}>
+                        <Icon className="h-4 w-4" />
                     </div>
                 </div>
             </CardHeader>
@@ -176,42 +172,87 @@ function InsightStrip({ data }) {
     const rain15 = data.weather_threshold_analysis.rainfall.find((d) => d.threshold_mm === 15);
     const strongestSignal = getWorstWeatherSignal(data.weather_threshold_analysis);
 
+    const insightCards = [
+        {
+            title: "Primary signal",
+            value: strongestSignal,
+            description: "Most predictive weather driver in this dataset",
+            className: "bg-orange-50/70 border-orange-100",
+            valueClassName: "text-orange-700",
+        },
+        {
+            title: "Rain > 10mm",
+            value: percent(rain10.disruption_rate),
+            description: "Disruption rate at threshold",
+            className: "bg-amber-50/70 border-amber-100",
+            valueClassName: "text-amber-700",
+        },
+        {
+            title: "Rain > 15mm",
+            value: percent(rain15.disruption_rate),
+            description: "Disruption rate at threshold",
+            className: "bg-rose-50/70 border-rose-100",
+            valueClassName: "text-rose-700",
+        },
+    ];
+
     return (
         <SectionCard>
-            <CardContent className="flex flex-col gap-4 p-5 md:flex-row md:items-start md:justify-between md:p-6">
-                <div className="max-w-2xl">
-                    <div className="mb-3 flex items-center gap-2">
-                        <div className="rounded-full bg-muted p-2">
-                            <ArrowUpRight className="h-4 w-4 text-muted-foreground" />
+            <CardContent className="p-5 md:p-6">
+                <div className="grid gap-4 xl:grid-cols-[1.5fr_1fr]">
+                    <div className="rounded-3xl border border-orange-100 bg-gradient-to-br from-orange-50 to-amber-50 p-5">
+                        <div className="mb-3 flex items-center gap-2">
+                            <div className="rounded-full bg-white/80 p-2 text-orange-600 shadow-sm">
+                                <ArrowUpRight className="h-4 w-4" />
+                            </div>
+                            <span className="text-xs font-medium uppercase tracking-[0.18em] text-orange-700/80">
+                                Key insight
+                            </span>
                         </div>
-                        <span className="text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">
-                            Key insight
-                        </span>
+
+                        <h3 className="text-lg font-semibold tracking-tight text-foreground">
+                            {strongestSignal} is the clearest disruption driver in the current dataset.
+                        </h3>
+
+                        <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
+                            Weather sensitivity becomes more pronounced at higher thresholds,
+                            making condition-based alerting a strong fit for commuter-facing
+                            disruption prediction.
+                        </p>
+
+                        <div className="mt-4 flex flex-wrap gap-2">
+                            <Badge className="rounded-full border-orange-200 bg-orange-100 text-orange-700 hover:bg-orange-100">
+                                Strongest signal: {strongestSignal}
+                            </Badge>
+                            <Badge className="rounded-full border-amber-200 bg-amber-100 text-amber-700 hover:bg-amber-100">
+                                Best for threshold alerts
+                            </Badge>
+                        </div>
                     </div>
 
-                    <h3 className="text-lg font-semibold tracking-tight text-foreground">
-                        {strongestSignal} is the clearest disruption driver in the current dataset.
-                    </h3>
-
-                    <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                        Weather sensitivity is strongest once conditions become more severe, making
-                        threshold-based alerting a strong candidate for commuter-facing prediction UX.
-                    </p>
-                </div>
-
-                <div className="flex flex-wrap gap-2 md:max-w-[380px] md:justify-end">
-                    <Badge variant="secondary" className="rounded-full px-3 py-1.5">
-                        Rain &gt; 10mm: {percent(rain10.disruption_rate)}
-                    </Badge>
-                    <Badge variant="secondary" className="rounded-full px-3 py-1.5">
-                        Rain &gt; 15mm: {percent(rain15.disruption_rate)}
-                    </Badge>
+                    <div className="grid gap-3 md:grid-cols-3 xl:grid-cols-1">
+                        {insightCards.map((item) => (
+                            <div
+                                key={item.title}
+                                className={`rounded-2xl border p-4 ${item.className}`}
+                            >
+                                <p className="text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
+                                    {item.title}
+                                </p>
+                                <p className={`mt-2 text-xl font-semibold tracking-tight ${item.valueClassName}`}>
+                                    {item.value}
+                                </p>
+                                <p className="mt-1 text-sm text-muted-foreground">
+                                    {item.description}
+                                </p>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </CardContent>
         </SectionCard>
     );
 }
-
 
 // ─── Summary ─────────────────────────────────────────────────────────────────
 
@@ -222,10 +263,26 @@ function ReliabilitySummary({ data }) {
     const rain10 = data.weather_threshold_analysis.rainfall.find((d) => d.threshold_mm === 10);
 
     const summaryItems = [
-        `Overall disruption rate is ${percent(overallRate)} across the full dataset.`,
-        `Saturday is the safest day at ${percent(saturday.disruption_rate)}.`,
-        `February is one of the weakest months at ${percent(feb.disruption_rate)}.`,
-        `Rain above 10mm rises to ${percent(rain10.disruption_rate)} disruption risk.`,
+        {
+            title: "Overall network profile",
+            body: `Overall disruption rate is ${percent(overallRate)} across the full dataset.`,
+            tint: "bg-orange-50/70 border-orange-100",
+        },
+        {
+            title: "Most reliable day",
+            body: `Saturday is the safest day at ${percent(saturday.disruption_rate)}.`,
+            tint: "bg-emerald-50/70 border-emerald-100",
+        },
+        {
+            title: "Weakest month",
+            body: `February is one of the weakest months at ${percent(feb.disruption_rate)}.`,
+            tint: "bg-rose-50/70 border-rose-100",
+        },
+        {
+            title: "Rain sensitivity",
+            body: `Rain above 10mm rises to ${percent(rain10.disruption_rate)} disruption risk.`,
+            tint: "bg-amber-50/70 border-amber-100",
+        },
     ];
 
     return (
@@ -241,10 +298,15 @@ function ReliabilitySummary({ data }) {
                 <div className="grid gap-3 md:grid-cols-2">
                     {summaryItems.map((item) => (
                         <div
-                            key={item}
-                            className="rounded-2xl bg-muted px-4 py-3 text-sm leading-6 text-muted-foreground"
+                            key={item.title}
+                            className={`rounded-2xl border px-4 py-4 ${item.tint}`}
                         >
-                            {item}
+                            <p className="text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
+                                {item.title}
+                            </p>
+                            <p className="mt-2 text-sm leading-6 text-foreground">
+                                {item.body}
+                            </p>
                         </div>
                     ))}
                 </div>
@@ -260,28 +322,63 @@ export default function AnalyticsDashboardPage() {
 
     return (
         <section className="w-full">
-            <div className="mx-auto flex w-full flex-col gap-8 px-4 py-2 md:px-6">
+            <div className="mx-auto flex w-full flex-col gap-10 px-4 py-2 md:px-6">
+                <DashboardSection
+                    icon={Activity}
+                    eyebrow="Selected context"
+                    title="Analytics scope"
+                    description="Current line, location, and observed data range for this dashboard."
+                >
+                    <SelectedLineSummaryCard
+                        selectedLineId={selectedLineId}
+                        data={analyticsData}
+                    />
+                </DashboardSection>
 
-                <SelectedLineSummaryCard
-                    selectedLineId={selectedLineId}
-                    data={analyticsData}
-                />
+                <DashboardSection
+                    icon={Sparkles}
+                    eyebrow="Overview"
+                    title="Key reliability signals"
+                    description="High-level metrics to help you understand overall disruption behaviour at a glance."
+                >
+                    <OverviewCards data={analyticsData} />
+                </DashboardSection>
 
+                <DashboardSection
+                    icon={ArrowUpRight}
+                    eyebrow="Highlights"
+                    title="What stands out"
+                    description="The strongest signals and threshold effects surfaced from the current dataset."
+                >
+                    <InsightStrip data={analyticsData} />
+                </DashboardSection>
 
-                <OverviewCards data={analyticsData} />
+                <DashboardSection
+                    icon={BarChart3}
+                    eyebrow="Trends"
+                    title="Temporal patterns"
+                    description="Switch between day-of-week and monthly views to compare reliability patterns over time."
+                >
+                    <TemporalPatternsPanel data={analyticsData} />
+                </DashboardSection>
 
-                {/* 2. Key insight */}
-                <InsightStrip data={analyticsData} />
+                <DashboardSection
+                    icon={CloudRain}
+                    eyebrow="Deep dive"
+                    title="Weather threshold analysis"
+                    description="Explore how disruption risk changes as weather conditions become more severe."
+                >
+                    <WeatherThresholdPanel data={analyticsData} />
+                </DashboardSection>
 
-                {/* <SeasonalityPanel data={analyticsData} /> */}
-                {/* 3. Fast trends */}
-                {/* <TrendsSection data={analyticsData} /> */}
-                <TemporalPatternsPanel data={analyticsData} />
-                {/* 4. Deep dive — only interactive panel */}
-                <WeatherThresholdPanel data={analyticsData} />
-
-                {/* 5. Summary */}
-                <ReliabilitySummary data={analyticsData} />
+                <DashboardSection
+                    icon={FileText}
+                    eyebrow="Summary"
+                    title="Analyst interpretation"
+                    description="A concise interpretation layer for presenting the most important findings."
+                >
+                    <ReliabilitySummary data={analyticsData} />
+                </DashboardSection>
             </div>
         </section>
     );
