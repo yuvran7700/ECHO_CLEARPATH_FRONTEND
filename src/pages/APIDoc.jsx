@@ -4,11 +4,12 @@ import DocsSidebar from '../components/APIScrollBar';
 import APICards from '../components/APICards';
 import HTTPTable from '../components/HTTPTable'
 import ADAGE from '../components/ADAGE';
+import APINav from '@/components/ApiComponents/ApiNavBar';
 
 const APIDoc = () => {
     return (
         <div className={styles.page}>
-            <Navbar />
+            <APINav />    
             <div className={styles.body}> 
                 <DocsSidebar />
                 <div className={styles.container}>

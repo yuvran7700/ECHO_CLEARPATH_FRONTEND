@@ -27,7 +27,7 @@ export default function ApiDocButton() {
                 "See the setup flow for frontend apps, server-side services, and testing environments.",
             buttonLabel: "View guide",
             icon: BookOpen,
-            externalUrl: "https://yuvran7700.github.io/clearpath-docs/", // 👈 external
+            externalUrl: "https://yuvran7700.github.io/clearpath-docs/",
         },
     ];
 

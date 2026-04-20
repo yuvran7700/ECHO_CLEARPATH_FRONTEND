@@ -51,10 +51,10 @@ const DashboardNav = () => {
                 </div>
 
                 <button 
-                    onClick={() => navigate('/')} 
+                    onClick={() => navigate('/api-doc')} 
                     className="group flex items-center gap-2 pl-4 pr-2 py-1 text-[12px] font-bold text-black border-l border-gray-200 transition-all hover:opacity-70"
                 >
-                    Home
+                    Developer Mode
                     <div className="flex h-7 w-7 items-center justify-center rounded-full bg-black text-white">
                         <ArrowUpRight size={14} strokeWidth={3} />
                     </div>

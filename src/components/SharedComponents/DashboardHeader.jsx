@@ -38,9 +38,13 @@ const DashboardHeader = () => {
                             {content.description}
                         </p>
                     </div>
-                    <CurrentTime />
+                    <div className="flex flex-col gap-2 py-2">
+                        <LineSelector />
+                        <CurrentTime />
+                    </div>
+                    
                 </div>
-                <LineSelector />
+                
             </div>
         </header>
     );

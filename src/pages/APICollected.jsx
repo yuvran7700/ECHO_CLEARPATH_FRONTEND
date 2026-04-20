@@ -4,11 +4,13 @@ import DocsSidebar from '../components/APIScrollBar';
 import APICards from '../components/APICards';
 import HTTPTable from '../components/HTTPTable'
 import Collected from '../components/Collected';
+import APINav from '@/components/ApiComponents/ApiNavBar';
 
 const APIDocCollected = () => {
     return (
-        <div className={styles.page}>
-            <Navbar />
+        <div>
+            <div className={styles.page}>
+                <APINav />     
             <div className={styles.body}>
                 <DocsSidebar />
                 <div className={styles.container}>
@@ -16,6 +18,8 @@ const APIDocCollected = () => {
                 </div>
             </div>
         </div>
+        </div>
+        
     );
 };
 
