@@ -31,7 +31,7 @@ const DashboardHeader = () => {
                         <span className="block text-[11px] font-bold tracking-[0.2em] text-black/40 uppercase mb-2">
                             {content.eyebrow}
                         </span>
-                        <h1 className="text-4xl md:text-5xl font-semibold tracking-[-0.03em] text-black leading-tight">
+                        <h1 className="text-4xl md:text-3xl font-semibold tracking-[-0.03em] text-black leading-tight">
                             {content.title}
                         </h1>
                         <p className="mt-4 text-[15px] leading-relaxed text-black/50 font-medium max-w-xl">
