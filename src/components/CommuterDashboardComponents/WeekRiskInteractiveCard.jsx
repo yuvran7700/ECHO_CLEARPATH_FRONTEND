@@ -74,14 +74,20 @@ function getRiskMeta(riskLevel) {
 
 function WeatherMetric({ icon: Icon, label, value }) {
     return (
-        <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-            <div className="flex items-center gap-2 text-slate-500">
-                <Icon className="h-4 w-4" />
-                <span className="text-xs font-medium uppercase tracking-wide">
+        <div className="flex items-center gap-4 rounded-2xl bg-[#456990] p-5 text-white shadow-sm border border-white/10">
+            {/* Icon Container with subtle glass effect */}
+            <div className="shrink-0 rounded-xl bg-white/20 p-3">
+                <Icon className="h-6 w-6" strokeWidth={2.5} />
+            </div>
+
+            <div className="flex flex-col min-w-0">
+                <span className="text-[11px] font-bold uppercase tracking-[0.15em] text-white/70">
                     {label}
                 </span>
+                <span className="truncate text-xl font-semibold tracking-tight">
+                    {value}
+                </span>
             </div>
-            <p className="mt-2 text-sm font-medium text-slate-900">{value}</p>
         </div>
     );
 }

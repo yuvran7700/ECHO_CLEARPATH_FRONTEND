@@ -1,8 +1,15 @@
 import useForecast from "../hooks/useForecast";
-import RiskCard from "../components/CommuterDashboardComponents/RiskCardComponent";
-import WeeklyRisk from "../components/CommuterDashboardComponents/WeeklyRisk";
-import NSWInteractiveRailMap from "../components/CommuterDashboardComponents/NSWTrainLineMap";
+import { 
+    CalendarDays, 
+    TrainFront, 
+    Info, 
+    Map as MapIcon, 
+    LayoutDashboard 
+} from "lucide-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import WeeklyInteractiveRiskCard from "../components/CommuterDashboardComponents/WeekRiskInteractiveCard";
+import NSWInteractiveRailMap from "../components/CommuterDashboardComponents/NSWTrainLineMap";
+
 const LINE_META = {
     T1: "North Shore & Western Line",
     T2: "Leppington & Inner West Line",
@@ -16,6 +23,42 @@ const LINE_META = {
     M1: "Metro North West & Bankstown",
 };
 
+// --- Reusable UI Components from Analytics Reference ---
+
+function SectionCard({ className = "", children }) {
+    return (
+        <Card className={`rounded-3xl border shadow-sm ${className}`}>
+            {children}
+        </Card>
+    );
+}
+
+function DashboardSection({ icon: Icon, eyebrow, title, description, children }) {
+    return (
+        <div className="space-y-4">
+            <div className="space-y-2">
+                <div className="flex items-center gap-2 text-muted-foreground">
+                    <div className="rounded-full border bg-muted/50 p-2">
+                        <Icon className="h-4 w-4" />
+                    </div>
+                    <span className="text-[11px] font-medium uppercase tracking-[0.2em]">
+                        {eyebrow}
+                    </span>
+                </div>
+                <div>
+                    <h2 className="text-xl font-semibold tracking-tight text-foreground">
+                        {title}
+                    </h2>
+                    <p className="mt-1 text-sm leading-6 text-muted-foreground">
+                        {description}
+                    </p>
+                </div>
+            </div>
+            {children}
+        </div>
+    );
+}
+
 export default function CommuterDashboard() {
     const {
         data,
@@ -28,50 +71,83 @@ export default function CommuterDashboard() {
         selectedDay,
     } = useForecast();
 
-    if (loading) return <p>Loading forecast...</p>;
-    if (error) return <p>{error}</p>;
-    if (!data || !selectedDay) return <p>No forecast data available.</p>;
+    if (loading) return <div className="flex h-96 items-center justify-center p-8 text-muted-foreground">Loading forecast...</div>;
+    if (error) return <div className="p-8 text-destructive">{error}</div>;
+    if (!data || !selectedDay) return <div className="p-8">No forecast data available.</div>;
 
     const selectedLineName = LINE_META[selectedLineId] || "NSW Rail Line";
 
     return (
-        <div className="flex w-full flex-col gap-8 lg:flex-row">
-            <div className="flex min-w-0 flex-1 flex-col gap-6">
-                <WeeklyInteractiveRiskCard
-                    lineId={selectedLineId}
-                    forecast={data}
-                    selectedDayIndex={selectedDayIndex}
-                    onDayChange={setSelectedDayIndex}
-                />
+        <section className="w-full">
+            <div className="mx-auto flex w-full flex-col gap-10 px-4 py-8 md:px-6">
+                
+                {/* Section 1: Weekly Outlook */}
+                <DashboardSection
+                    icon={CalendarDays}
+                    eyebrow="5-Day Forecast"
+                    title="Commuter Risk Outlook"
+                    description="Interactive daily breakdown of predicted disruptions based on weather and historical patterns."
+                >
+                    <WeeklyInteractiveRiskCard
+                        lineId={selectedLineId}
+                        forecast={data}
+                        selectedDayIndex={selectedDayIndex}
+                        onDayChange={setSelectedDayIndex}
+                    />
+                </DashboardSection>
 
-                {/* <RiskCard
-                    lineId={selectedLineId}
-                    forecastDay={selectedDay}
-                /> */}
+                {/* Section 2: Detailed Interpretation */}
+                <div className="grid gap-6 lg:grid-cols-3">
+                    <div className="lg:col-span-2">
+                        <DashboardSection
+                            icon={Info}
+                            eyebrow="Analysis"
+                            title="Line Insight"
+                            description={`Specific conditions expected for the ${selectedLineId}.`}
+                        >
+                            <SectionCard className="border-none bg-[#2A2B2A] text-white">
+                                <CardHeader>
+                                    <CardDescription className="text-[11px] uppercase tracking-[0.18em] text-white/60">
+                                        Tomorrow's Outlook — {selectedLineId}
+                                    </CardDescription>
+                                    <CardTitle className="mt-2 text-2xl font-semibold tracking-tight text-white">
+                                        {selectedLineName}
+                                    </CardTitle>
+                                </CardHeader>
+                                <CardContent>
+                                    <p className="text-lg leading-relaxed text-white/90">
+                                        {selectedDay.message}
+                                    </p>
+                                    <div className="mt-6 flex items-center gap-2">
+                                        <div className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+                                        <span className="text-xs font-medium text-white/50 uppercase tracking-wider">
+                                            Live Prediction Engine Active
+                                        </span>
+                                    </div>
+                                </CardContent>
+                            </SectionCard>
+                        </DashboardSection>
+                    </div>
 
-                <div className="rounded-3xl border border-slate-200 bg-white p-6">
-                    <h2 className="text-xl font-semibold text-slate-900">
-                        Tomorrow’s line outlook
-                    </h2>
-                    <p className="mt-1 text-sm text-slate-500">
-                        Prediction summary for {selectedLineId} — {selectedLineName}
-                    </p>
-                    <p className="mt-4 text-sm text-slate-600">
-                        {selectedDay.message}
-                    </p>
+                    <div className="lg:col-span-1">
+                        <DashboardSection
+                            icon={MapIcon}
+                            eyebrow="Context"
+                            title="Network Map"
+                            description="Select a different line to view its specific risk profile."
+                        >
+                            <SectionCard className="overflow-hidden h-[300px] lg:h-full min-h-[300px]">
+                                <NSWInteractiveRailMap 
+                                    selectedLineId={selectedLineId} 
+                                    onLineSelect={setSelectedLineId} 
+                                />
+                            </SectionCard>
+                        </DashboardSection>
+                    </div>
                 </div>
+
+                {/* Section 3: Summary or Action Items could go here, similar to InsightStrip */}
             </div>
-            {/* <WeeklyRisk
-                forecast={data}
-            /> */}
-
-
-            {/* <aside className="w-full lg:w-[400px]">
-                <NSWInteractiveRailMap
-                    selectedLineId={selectedLineId}
-                    onLineChange={setSelectedLineId}
-                />
-            </aside> */}
-        </div>
+        </section>
     );
 }

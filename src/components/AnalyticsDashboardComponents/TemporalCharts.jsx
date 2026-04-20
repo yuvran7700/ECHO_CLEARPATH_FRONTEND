@@ -48,14 +48,17 @@ function ChartWrapper({ height = 300, children }) {
 
 function StatCard({ label, value, helper }) {
     return (
-        <div className="rounded-2xl border bg-muted/40 px-4 py-3">
-            <p className="text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
+        <div 
+            className="rounded-2xl border px-4 py-3" 
+            style={{ backgroundColor: '#456990' }}
+        >
+            <p className="text-[11px] uppercase tracking-[0.16em] text-white/70">
                 {label}
             </p>
-            <p className="mt-1 text-lg font-semibold tracking-tight text-foreground">
+            <p className="mt-1 text-lg font-semibold tracking-tight text-white">
                 {value}
             </p>
-            <p className="mt-1 text-xs leading-5 text-muted-foreground">
+            <p className="mt-1 text-xs leading-5 text-white/80">
                 {helper}
             </p>
         </div>

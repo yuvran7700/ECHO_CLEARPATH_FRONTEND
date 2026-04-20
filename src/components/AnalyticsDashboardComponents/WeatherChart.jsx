@@ -245,27 +245,7 @@ export default function WeatherThresholdPanel({ data }) {
 
     return (
         <Card className="overflow-hidden rounded-3xl border border-border/60 bg-card shadow-sm">
-            <CardHeader className="pb-4">
-                <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
-                    <div>
-                        <CardTitle className="text-lg font-semibold tracking-tight">
-                            Weather threshold analysis
-                        </CardTitle>
-                        <CardDescription className="text-sm">
-                            Compare how disruption risk changes as conditions become more severe
-                        </CardDescription>
-                    </div>
 
-                    {activeTabData && (
-                        <div className="rounded-full border border-border bg-muted/40 px-3 py-1.5 text-xs text-muted-foreground">
-                            Active view:{" "}
-                            <span className="font-medium text-foreground">
-                                {activeTabData.label}
-                            </span>
-                        </div>
-                    )}
-                </div>
-            </CardHeader>
 
             <CardContent className="space-y-6">
                 <div className="grid grid-cols-3 gap-2 rounded-2xl border border-border bg-muted/35 p-1.5">
