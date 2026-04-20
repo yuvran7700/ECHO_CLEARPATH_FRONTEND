@@ -148,13 +148,14 @@ body {
     --sidebar-border: oklch(1 0 0 / 10%);
     --sidebar-ring: oklch(0.556 0 0);
   }
+  
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-heading);
     letter-spacing: -0.02em; 
   }
 
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border
   }
   body {
     @apply bg-background text-foreground;
@@ -162,16 +163,4 @@ body {
   html {
     @apply font-sans;
   }
-}
-
-main {
-  margin-top: 0 !important;
-  margin-bottom: 0 !important;
-  
-  /* Force main to be at least the full height of the viewport 
-     minus your navbar height (adjust 64px to your actual nav height) */
-  min-height: calc(100vh - 64px) !important;
-  
-  /* If main is still too small, this forces it to stretch */
-  flex-grow: 1 !important;
 }

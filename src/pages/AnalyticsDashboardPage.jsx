@@ -28,7 +28,7 @@ const AnalyticsDashboardPage = () => {
 		<div className="min-h-screen bg-[#F6F8FB]">
 			<div className={styles.page}>
 				<div className={styles.container}>
-					<TrainDropDown />
+					{/* <TrainDropDown /> */}
 					<RiskBanner risk={49.65} />
 					<div className={styles.twoColumn}>
 						<div className={styles.left}>
