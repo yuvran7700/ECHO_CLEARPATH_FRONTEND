@@ -20,10 +20,10 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
-import { analyticsData } from "@/mocks/analysisStub";
 import WeatherThresholdPanel from "@/components/AnalyticsDashboardComponents/WeatherChart";
 import TemporalPatternsPanel from "@/components/AnalyticsDashboardComponents/TemporalCharts";
 import SelectedLineSummaryCard from "@/components/AnalyticsDashboardComponents/SelectedLineSummaryCard";
+import { useAnalyticsData } from "@/hooks/useAnalyticsData";
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
@@ -391,6 +391,12 @@ function ReliabilitySummary({ data }) {
 export default function AnalyticsDashboardPage() {
     const selectedLineId = "T1";
 
+    const { analytics, analyticsLoading, analyticsError } = useAnalyticsData();
+
+    if (analyticsLoading) return <p>Loading analytics...</p>;
+    if (analyticsError) return <p>{analyticsError}</p>;
+    if (!analytics) return <p>No analytics data found.</p>;
+        
     return (
         <section className="w-full">
             <div className="mx-auto flex w-full flex-col gap-10 px-4 py-2 md:px-6">
@@ -402,7 +408,7 @@ export default function AnalyticsDashboardPage() {
                 >
                     <SelectedLineSummaryCard
                         selectedLineId={selectedLineId}
-                        data={analyticsData}
+                        data={analytics}
                     />
                 </DashboardSection>
 
@@ -412,7 +418,7 @@ export default function AnalyticsDashboardPage() {
                     title="Key reliability signals"
                     description="High-level metrics to help you understand overall disruption behaviour at a glance."
                 >
-                    <OverviewCards data={analyticsData} />
+                    <OverviewCards data={analytics} />
                 </DashboardSection>
 
                 <DashboardSection
@@ -421,7 +427,7 @@ export default function AnalyticsDashboardPage() {
                     title="What stands out"
                     description="The strongest signals and threshold effects surfaced from the current dataset."
                 >
-                    <InsightStrip data={analyticsData} />
+                    <InsightStrip data={analytics} />
                 </DashboardSection>
 
                 <DashboardSection
@@ -430,7 +436,7 @@ export default function AnalyticsDashboardPage() {
                     title="Temporal patterns"
                     description="Switch between day-of-week and monthly views to compare reliability patterns over time."
                 >
-                    <TemporalPatternsPanel data={analyticsData} />
+                    <TemporalPatternsPanel data={analytics} />
                 </DashboardSection>
 
                 <DashboardSection
@@ -439,7 +445,7 @@ export default function AnalyticsDashboardPage() {
                     title="Weather threshold analysis"
                     description="Explore how disruption risk changes as weather conditions become more severe."
                 >
-                    <WeatherThresholdPanel data={analyticsData} />
+                    <WeatherThresholdPanel data={analytics} />
                 </DashboardSection>
 
                 <DashboardSection
@@ -448,7 +454,7 @@ export default function AnalyticsDashboardPage() {
                     title="Analyst interpretation"
                     description="A concise interpretation layer for presenting the most important findings."
                 >
-                    <ReliabilitySummary data={analyticsData} />
+                    <ReliabilitySummary data={analytics} />
                 </DashboardSection>
             </div>
         </section>

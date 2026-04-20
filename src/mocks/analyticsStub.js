@@ -1,4 +1,4 @@
-export const analyticsData = {
+const analyticsData = {
     location: "parramatta",
     overall: {
         total_days: 840,
@@ -153,3 +153,6 @@ export const analyticsData = {
         ],
     },
 };
+
+
+export default analyticsData;
