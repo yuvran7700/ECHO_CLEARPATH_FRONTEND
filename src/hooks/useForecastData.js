@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import { fetchForecastData } from "../services/dashboardApi";
 import forecastStub from "../mocks/forecastStub";

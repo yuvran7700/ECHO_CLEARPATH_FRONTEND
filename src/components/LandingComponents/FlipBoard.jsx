@@ -1,15 +1,7 @@
-import { useEffect, useMemo, useRef, useState, useCallback } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-
-const MESSAGES = [
-  "STAY HUNGRY \nSTAY IN BED \n- STEVE JOBS",
-  "What did you get done this week?",
-  "I burned $20 \nfor this shit.",
-  "DONT WORRY \nBE HAPPY FFS.",
-  "LADIES AND GENTLEMEN \nWELCOME TO F#!@# C!@$",
-];
 
 const STATES = [
   {
@@ -129,7 +121,7 @@ function CardFace({ char, type }) {
 
 /* ────────────────────────── Flap Cell ───────────────────────────── */
 
-function FlapCell({ value, index, trigger }) {
+function FlapCell({ value, index }) {
   const { current, prev, flipId } = useFlapEngine(
     value,
     index * 40,
@@ -185,18 +177,6 @@ function FlapCell({ value, index, trigger }) {
 
 export default function FlipBoard() {
   const [stateIndex, setStateIndex] = useState(0);
-  const [msgIdx, setMsgIdx] = useState(0);
- 
-  const next = useCallback(
-    () => setMsgIdx((i) => (i + 1) % MESSAGES.length),
-    [],
-  );
- 
-  useEffect(() => {
-    const id = setInterval(next, 6000);
-    return () => clearInterval(id);
-  }, [next]);
- 
 
   useEffect(() => {
     const t = setInterval(() => {
@@ -251,7 +231,6 @@ export default function FlipBoard() {
       </div>
 
       {/* Board */}
-      {/* <TextFlippingBoard text={MESSAGES[msgIdx]} /> */}
       <div className="flex flex-col gap-3">
         <div className="flex gap-2 justify-center">
           {TOP_ROW.map((ch, i) => (

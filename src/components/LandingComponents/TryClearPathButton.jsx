@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function TryClearPathButton({ isDark = false }) {
     const navigate = useNavigate(); 
-    // 1. Added 'const' to define the function
+    
     const handleClick = () => {
         console.log("Button clicked!");
         navigate('/choose-mode')
