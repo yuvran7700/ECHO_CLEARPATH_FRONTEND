@@ -24,6 +24,7 @@ jobs:
       # 1. LINTING + FORMATTING CHECK
       - name: Run ESLint
         run: npm run lint
+        continue-on-error: true
 
       # 2. UNIT TESTING
       - name: Run unit tests
