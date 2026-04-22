@@ -127,25 +127,7 @@ export default function CommuterDashboard() {
                             </SectionCard>
                         </DashboardSection>
                     </div>
-
-                    {/* <div className="lg:col-span-1">
-                        <DashboardSection
-                            icon={MapIcon}
-                            eyebrow="Context"
-                            title="Network Map"
-                            description="Select a different line to view its specific risk profile."
-                        >
-                            <SectionCard className="overflow-hidden h-[300px] lg:h-full min-h-[300px]">
-                                <NSWInteractiveRailMap 
-                                    selectedLineId={selectedLineId} 
-                                    onLineSelect={setSelectedLineId} 
-                                />
-                            </SectionCard>
-                        </DashboardSection>
-                    </div> */}
                 </div>
-
-                {/* Section 3: Summary or Action Items could go here, similar to InsightStrip */}
             </div>
         </section>
     );

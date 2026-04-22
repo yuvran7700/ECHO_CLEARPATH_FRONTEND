@@ -29,15 +29,13 @@ const ModeCard = ({ icon, title, description, accentColor, onClick }) => {
     );
 };
 
-export default function ChooseMode() {
-    const navigate = useNavigate()
-
-    const modes = [
+const modes = [
         {
             id: 'commuter',
             icon: '🚗',
             title: 'Plan my Journey',
             accentColor: 'blue',
+            path: '/dashboard/plan-your-journey',
             description: <>Check real-time <span className="font-semibold text-blue-600">risk levels</span> for your transit lines based on live weather and social data.</>
         },
         {
@@ -45,6 +43,7 @@ export default function ChooseMode() {
             icon: '📊',
             title: 'Explore Data',
             accentColor: 'purple',
+            path: '/dashboard/analytics',
             description: <>Analyze the <span className="font-semibold text-purple-600">correlation statistics</span> and historical evidence behind our transit predictions.</>
         },
         {
@@ -52,10 +51,16 @@ export default function ChooseMode() {
             icon: '🛠️',
             title: 'Developer',
             accentColor: 'emerald',
+            path: '/api-doc',
             description: <>Access our raw <span className="font-semibold text-emerald-600">Weather & Twitter APIs</span> to integrate ClearPath data into your own platforms.</>
         }
     ];
 
+
+export default function ChooseMode() {
+    const navigate = useNavigate()
+
+    
     return (
         <main className="min-h-screen w-full bg-slate-50 flex flex-col items-center justify-center p-6 font-sans">
             <div className="text-center mb-12">
@@ -72,16 +77,7 @@ export default function ChooseMode() {
                     <ModeCard
                         key={mode.id}
                         {...mode}
-                        onClick={() => {
-                            if (mode.id === 'commuter') {
-                                navigate('/dashboard/plan-your-journey'); 
-                            } else if (mode.id === 'researcher') {
-                                navigate('/dashboard/analytics'); 
-                            } 
-                            else if (mode.id === 'developer') {
-                                navigate('/api-doc'); 
-                        }
-                    }}
+                        onClick={() => navigate(mode.path)}
                     />
                 ))}
             </section>
