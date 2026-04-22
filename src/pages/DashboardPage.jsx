@@ -7,8 +7,8 @@ const DashboardLayout = () => {
 
   return (
     <div>
-      <DashboardNav />    {/* Always visible */}
-      <DashboardHeader /> {/* Always visible */}
+      <DashboardNav />   
+      <DashboardHeader /> 
       <main className="content-area mx-auto px-6 pb-20">
         <Outlet />
       </main>

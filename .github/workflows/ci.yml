@@ -26,13 +26,23 @@ jobs:
         run: npm run lint
         continue-on-error: true
 
-      # 2. UNIT TESTING
-      - name: Run unit tests
-        run: npx vitest run src/tests/components src/tests/hooks src/tests/pages
+      - name: Run smoke tests
+        run: npx vitest run src/tests/smoke
 
-      # 3. INTEGRATION TESTING
-      - name: Run integration tests
+      - name: Run component tests
+        run: npx vitest run src/tests/components
+
+      - name: Run hooks tests
+        run: npx vitest run src/tests/hooks
+
+      - name: Run context tests
         run: npx vitest run src/tests/context
+
+      - name: Run integration tests
+        run: npx vitest run src/tests/integration
+
+      - name: Run contract tests
+        run: npx vitest run src/tests/contract
 
       # 4. COVERAGE TESTING
       - name: Run coverage
