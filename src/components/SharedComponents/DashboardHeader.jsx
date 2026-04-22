@@ -1,20 +1,11 @@
-import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import CurrentTime from '../CommuterDashboardComponents/CurrentTime';
 import LineSelector from './LineSelector';
 const DashboardHeader = () => {
     const location = useLocation();
-    const [time, setTime] = useState(new Date());
-
-    // Keep the clock ticking
-    useEffect(() => {
-        const timer = setInterval(() => setTime(new Date()), 1000);
-        return () => clearInterval(timer);
-    }, []);
 
     const isPlan = location.pathname === '/dashboard/plan-your-journey';
 
-    // Content mapping for "Apple-style" clarity
     const content = {
         title: isPlan ? "Plan ahead with disruption insight" : "Operational Network Analytics",
         eyebrow: isPlan ? "COMMUTER DASHBOARD" : "OPERATOR INSIGHTS",
