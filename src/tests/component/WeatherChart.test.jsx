@@ -1,8 +1,10 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 import WeatherThresholdPanel from "@/components/AnalyticsDashboardComponents/WeatherChart";
 import analyticsStub from "@/mocks/analyticsStub";
+
+let capturedTooltipProps = null;
 
 vi.mock("recharts", () => ({
     ResponsiveContainer: ({ children }) => <div>{children}</div>,
@@ -10,10 +12,13 @@ vi.mock("recharts", () => ({
     Line: () => null,
     XAxis: () => null,
     YAxis: () => null,
-    Tooltip: () => null,
     CartesianGrid: () => null,
     Legend: () => null,
     ReferenceLine: () => null,
+    Tooltip: (props) => {
+        capturedTooltipProps = props;
+        return null;
+    },
 }));
 
 vi.mock("framer-motion", () => ({
@@ -24,6 +29,10 @@ vi.mock("framer-motion", () => ({
 }));
 
 describe("WeatherThresholdPanel", () => {
+    beforeEach(() => {
+        capturedTooltipProps = null;
+    });
+
     it("renders without crashing", () => {
         render(<WeatherThresholdPanel data={analyticsStub} />);
     });
@@ -75,5 +84,69 @@ describe("WeatherThresholdPanel", () => {
     it("renders the line chart", () => {
         render(<WeatherThresholdPanel data={analyticsStub} />);
         expect(screen.getByTestId("line-chart")).toBeDefined();
+    });
+
+    it("Tooltip formatter returns percentage and label string", () => {
+        render(<WeatherThresholdPanel data={analyticsStub} />);
+        expect(capturedTooltipProps).not.toBeNull();
+
+        const result = capturedTooltipProps.formatter(63.2);
+        expect(result[0]).toBe("63.2%");
+        expect(result[1]).toBe("Disruption rate");
+    });
+
+    it("Tooltip labelFormatter returns threshold string with unit", () => {
+        render(<WeatherThresholdPanel data={analyticsStub} />);
+        expect(capturedTooltipProps).not.toBeNull();
+
+        const result = capturedTooltipProps.labelFormatter(10);
+        expect(result).toBe("Threshold: 10°C");
+    });
+
+    it("Tooltip labelFormatter uses correct unit after switching to Wind tab", async () => {
+        capturedTooltipProps = null;
+        const user = userEvent.setup();
+        render(<WeatherThresholdPanel data={analyticsStub} />);
+        await user.click(screen.getAllByText("Wind")[0]);
+
+        expect(capturedTooltipProps).not.toBeNull();
+        const result = capturedTooltipProps.labelFormatter(20);
+        expect(result).toBe("Threshold: 20km/h");
+    });
+
+    it("Tooltip labelFormatter uses correct unit after switching to Rainfall tab", async () => {
+        capturedTooltipProps = null;
+        const user = userEvent.setup();
+        render(<WeatherThresholdPanel data={analyticsStub} />);
+        await user.click(screen.getAllByText("Rainfall")[0]);
+
+        expect(capturedTooltipProps).not.toBeNull();
+        const result = capturedTooltipProps.labelFormatter(15);
+        expect(result).toBe("Threshold: 15mm");
+    });
+
+    it("renders — for peak when data is empty", () => {
+        const emptyData = {
+            ...analyticsStub,
+            weather_threshold_analysis: {
+                ...analyticsStub.weather_threshold_analysis,
+                temperature: [],
+            },
+        };
+        render(<WeatherThresholdPanel data={emptyData} />);
+        expect(screen.getByText("—")).toBeDefined();
+        expect(screen.getByText("No data")).toBeDefined();
+    });
+
+    it("renders 0% average when temperature data is empty", () => {
+        const emptyData = {
+            ...analyticsStub,
+            weather_threshold_analysis: {
+                ...analyticsStub.weather_threshold_analysis,
+                temperature: [],
+            },
+        };
+        render(<WeatherThresholdPanel data={emptyData} />);
+        expect(screen.getByText("0%")).toBeDefined();
     });
 });
