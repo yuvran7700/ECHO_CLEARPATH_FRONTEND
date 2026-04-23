@@ -32,15 +32,12 @@ jobs:
 
       - name: Run component tests
         run: npx vitest run src/tests/components
-        continue-on-error: true
 
       - name: Run hooks tests
         run: npx vitest run src/tests/hooks
-        continue-on-error: true
 
       - name: Run context tests
         run: npx vitest run src/tests/context
-        continue-on-error: true
 
       - name: Run integration tests
         run: npx vitest run src/tests/integration
@@ -48,7 +45,8 @@ jobs:
 
       - name: Run contract tests
         run: npx vitest run src/tests/contract
-        continue-on-error: true
+        env:
+          VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
 
       # 4. COVERAGE TESTING
       - name: Run coverage
