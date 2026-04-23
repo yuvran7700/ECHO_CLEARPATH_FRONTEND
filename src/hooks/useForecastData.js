@@ -16,8 +16,8 @@ export function useForecastData() {
                 setLoading(true);
                 setError("");
 
-                const result = await fetchForecastData();
-                // const result = forecastStub;
+                // const result = await fetchForecastData();
+                const result = forecastStub;
 
                 if (isMounted) {
                     setData(result);

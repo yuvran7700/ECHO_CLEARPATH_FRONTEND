@@ -54,7 +54,7 @@ const AccordionItem = ({ item, depth = 0 }) => {
 
       <AccordionDetails sx={{
         padding: '0 16px 16px',
-        color: 'var(--text)',
+        color: 'white',
         fontSize: '14px',
         fontFamily: 'Inter',
         lineHeight: 1.6,

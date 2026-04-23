@@ -3,48 +3,45 @@ import CodeBlock from './CodeBlock'
 import AccordianObjectS from './AccordianObject'
 import CurlRequest from './CurlRequest'
 
-const curl = `curl -X 'GET' \\'https://nv2ymlpynf.execute-api.us-east-1.
-amazonaws.com/weather/collection?date=INSERT_DATE' \\  
+const curl = `curl -X 'GET' \
+  'https://nv2ymlpynf.execute-api.us-east-1.
+  amazonaws.com/weather/preprocessed?date=INSERT_DATE' \\  
 -H 'accept: application/json'
 `
 const ADAGE_Object = `{
-  "data_source": "BOM",
-  "dataset_type": "Daily weather observations",
-  "dataset_id": "s3://clearpath-weather-index-v1/weather_collected/2026-03-18.json",
+  "data_source": "ClearPath",
+  "dataset_type": "Weather observations and severity",
+  "dataset_id": "dynamodb://clearpath-weather-data/2026-02-18",
   "events": [
     {
-      "event_type": "Daily weather observations",
+      "event_type": "Weather observations and severity",
       "event_time": {
-        "time_stamp": "2026-03-18T09:00:00",
+        "time_stamp": "2026-02-18T09:00:00",
         "duration": 86400,
         "duration_unit": "seconds",
         "time_zone": "Australia/Sydney"
       },
       "event_attributes": {
-        "date": "2026-03-18",
-        "tempMin_C": 19.6,
-        "tempMax_C": 23.3,
-        "rainfall_mm": 55,
-        "evaporation_mm": "Unavailable",
-        "sunshineHours_hours": "Unavailable",
-        "windWindDir": "S",
-        "maxWindSpeed_kmh": 41,
-        "maxWindTime": "00:59",
+        "date": "2026-02-18",
+        "tempMin_C": 21.2,
+        "tempMax_C": 36.6,
+        "rainfall_mm": 0.4,
+        "sunshineHours_hours": 7.4,
+        "maxWindSpeed_kmh": 61,
         "9am": {
-          "temp_C": 20.3,
-          "humidity_percent": 91,
-          "cloudAmount_oktas": 7,
-          "windDirection": "SSW",
-          "windSpeed_kmh": 19,
-          "mslp_hPa": 1022
+          "temp_C": 26.1,
+          "humidity_percent": 55
         },
         "3pm": {
-          "temp_C": 22.7,
-          "humidity_percent": 81,
-          "cloudAmount_oktas": 7,
-          "windDirection": "S",
-          "windSpeed_kmh": 15,
-          "mslp_hPa": 1020.1
+          "temp_C": 22.8,
+          "humidity_percent": 85
+        },
+        "weatherSeverity": {
+          "sunSeverity": "Partly Cloudy",
+          "rainSeverity": "Light rain",
+          "tempSeverity": "Warm",
+          "windSeverity": "Gale",
+          "humiditySeverity": "High Humidity"
         }
       }
     }
@@ -130,29 +127,9 @@ const items = [
             content: 'The amount of precipitation that occurred on the day'
           },
           {
-            title: 'evaporation_mm',
-            type: 'float',
-            content: 'Daily evaporation levels'
-          },
-          {
-            title: 'sunshineHours_hours',
-            type: 'integer',
-            content: 'Amount of bright sun recorded'
-          },
-          {
-            title: 'windWindDir',
-            type: 'string',
-            content: 'The direction the maximum level of wind was blowing'
-          },
-          {
             title: 'maxWindSpeed_kmh',
             type: 'integer',
             content: 'The maximum speed of the wind that day'
-          },
-          {
-            title: 'maxWindTime',
-            type: 'string',
-            content: 'The time at which the maximum wind speed occurred'
           },
           {
             title: '9am',
@@ -169,21 +146,6 @@ const items = [
                 type: 'float',
                 content: 'Relative humidity percentage at 9 am'
               },
-              {
-                title: 'cloudAmount',
-                type: 'float',
-                content: 'Cloud amount at 9 am'
-              },
-              {
-                title: 'windDir',
-                type: 'string',
-                content: 'The direction the wind was blowing in at 9 am'
-              },
-              {
-                title: 'mslp_hPA',
-                type: 'float',
-                content: 'The wind speed at 9 am'
-              }
             ]
           },
           {
@@ -200,21 +162,38 @@ const items = [
                 title: 'humidity_percent',
                 type: 'float',
                 content: 'Relative humidity percentage at 3 pm'
-              },
+              }
+            ]
+          },
+          {
+            title: 'weatherSeverity',
+            type: 'object',
+            content: 'Nested object containing weather severity classifications',
+            children: [
               {
-                title: 'cloudAmount',
-                type: 'float',
-                content: 'Cloud amount at 3 pm'
-              },
-              {
-                title: 'windDir',
+                title: 'Sunshine Severity',
                 type: 'string',
-                content: 'The direction the wind was blowing in at 3 pm'
+                content: 'Sun severity based off daily sunshine hours'
               },
               {
-                title: 'mslp_hPA',
-                type: 'float',
-                content: 'The wind speed at 3 pm'
+                title: 'rainSeverity',
+                type: 'string',
+                content: 'Rainfall severity based off daily rainfall amount'
+              },
+              {
+                title: 'tempSeverity',
+                type: 'string',
+                content: 'Temperature severity based off daily max, min, 9am and 3pm temp'
+              },
+              {
+                title: 'windSeverity',
+                type: 'string',
+                content: 'Wind severity based off daily max wind speed'
+              },
+              {
+                title: 'humiditySeverity',
+                type: 'string',
+                content: 'Humidity severity based off 9am and 3pm humidity amount'
               }
             ]
           },
@@ -224,13 +203,14 @@ const items = [
   },
 ]
 
-const Collected = () => {
+const Preprocessed = () => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.left}>
-        <h2 className={styles.title}>/collection</h2>
+        <h2 className={styles.title}>/preprocessed</h2>
         <p className={styles.description}>
-          Returns the ADAGE 3.0 compliant weather object for a specific date. All data is taken from the bureau of meteorology taken from primarily Observatory Hill in Sydney NSW.
+          Returns the ADAGE 3.0 compliant weather object for a specific date with weather severity classifications.
+          Contains only the weather data used to calculate the severity classifications. 
         </p>
         <p className={styles.description}>
           If data was unavailable (i.e. error, not taken etc), it’s parameter is a string with content “Unavailable”.
@@ -245,7 +225,7 @@ const Collected = () => {
       <div className={styles.right}>
         <CurlRequest
 					method="GET"
-          endpoint="/collection"
+          endpoint="/processed"
           language="JSON"
           code={curl}
 				/>
@@ -258,4 +238,4 @@ const Collected = () => {
   )
 }
 
-export default Collected
+export default Preprocessed
