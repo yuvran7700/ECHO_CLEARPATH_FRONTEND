@@ -11,13 +11,13 @@ const sections = [
   { label: 'HTTP Status Codes', href: '/api-doc#statcodes', type: 'anchor' },
   { label: 'ADAGE Object',      href: '/api-doc#ADAGE',     type: 'anchor' },
   { label: 'Weather Microservice', type: 'heading' },
-  { label: '\\collected',       href: '/api-doc/collected',          type: 'external' },
-  { label: '\\processed',       href: '/dashboard', type: 'external' },
+  { label: '\\collected',       href: '/api-doc/weather/collected',          type: 'external' },
+  { label: '\\processed',       href: '/api-doc/weather/preprocessed', type: 'external' },
   { label: 'Alert Microservice', type: 'heading' },
-  { label: '\\collection',       href: '/api-doc/collected',          type: 'external' },
+  { label: '\\collection',       href: '/api-doc/alert/collection',          type: 'external' },
   { label: 'Transport Microservice', type: 'heading' },
-  { label: '\\disruption-forecast',       href: '/api-doc/collected',          type: 'external' },
-  { label: '\\disruption-analytics',       href: '/dashboard', type: 'external' },
+  { label: '\\disruption-forecast',       href: '/api-doc/transport/disruption-forecast',          type: 'external' },
+  { label: '\\disruption-analytics',       href: '/api-doc/transport/disruption-analytics', type: 'external' },
 ]
 
 
