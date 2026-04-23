@@ -31,7 +31,7 @@ jobs:
         continue-on-error: true
 
       - name: Run component tests
-        run: npx vitest run src/tests/components
+        run: npx vitest run src/tests/component
 
       - name: Run hooks tests
         run: npx vitest run src/tests/hooks
