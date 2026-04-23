@@ -28,7 +28,6 @@ jobs:
 
       - name: Run smoke tests
         run: npx vitest run src/tests/smoke
-        continue-on-error: true
 
       - name: Run component tests
         run: npx vitest run src/tests/component
@@ -41,7 +40,6 @@ jobs:
 
       - name: Run integration tests
         run: npx vitest run src/tests/integration
-        continue-on-error: true
 
       - name: Run contract tests
         run: npx vitest run src/tests/contract

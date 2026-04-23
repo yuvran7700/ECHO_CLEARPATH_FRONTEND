@@ -30,6 +30,12 @@ export default defineConfig({
         "src/components/ui/**",
         "**/*.module.css",
       ],
+      thresholds: {
+        statements: 95,
+        branches: 80,
+        functions: 95,
+        lines: 95,
+      }
     },
   },
   
