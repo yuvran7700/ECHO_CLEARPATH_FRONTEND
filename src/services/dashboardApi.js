@@ -15,7 +15,7 @@ export async function fetchAnalyticsData() {
     const response = await fetch(`${API_URL}/transport/disruption-analytics`);
 
     if (!response.ok) {
-        throw new Error("Failed to fetch forecast data");
+        throw new Error("Failed to fetch analytics data");
     }
 
     return response.json();
