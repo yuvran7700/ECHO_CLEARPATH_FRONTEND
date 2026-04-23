@@ -22,5 +22,15 @@ export default defineConfig({
     globals: true,
     setupFiles: "./src/tests/setup.js",
     css: true,
+    coverage: {
+      exclude: [
+        "src/assets/**",
+        "src/styles/**",
+        "**/*.css",
+        "src/components/ui/**",
+        "**/*.module.css",
+      ],
+    },
   },
+  
 });
