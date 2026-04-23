@@ -51,6 +51,8 @@ jobs:
       # 4. COVERAGE TESTING
       - name: Run coverage
         run: npx vitest run --coverage
+        env:
+          VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
 
       - name: Upload coverage report
         uses: actions/upload-artifact@v4
