@@ -72,7 +72,7 @@ describe("APINav", () => {
 
     it("applies active styles to Overview when on /api-doc", () => {
         mockPathname = "/api-doc";
-        const { container } = render(<MemoryRouter><APINav /></MemoryRouter>);
+        render(<MemoryRouter><APINav /></MemoryRouter>);
         const overviewBtn = screen.getByText("Overview");
         expect(overviewBtn.className).toContain("bg-white");
     });
