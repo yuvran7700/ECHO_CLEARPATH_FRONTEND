@@ -5,8 +5,12 @@ import CommuterDashboard from './pages/CommuterDashboard';
 import AnalyticsDashboardPage from './pages/AnalyticsDashboardPage';
 import APIDoc from './pages/APIDoc';
 import APIDocCollected from './pages/APICollected';
+import APIPreprocessed from './pages/APIPreprocessed';
+import APIAlertCollected from './pages/APIAlertCollection';
 import DashboardLayout from './pages/DashboardPage';
 import ForecastProvider from "./context/ForecastProvider";
+import APIForecastPage from './pages/APIForecastPage';
+import APIAnalyticsPage from './pages/APIAnalyticsPage';
 
 function App() {
   return (
@@ -21,7 +25,11 @@ function App() {
             <Route index element={<Navigate to="plan-your-journey" replace />} />
           </Route>
           <Route path="/api-doc" element={<APIDoc />} />
-          <Route path="/api-doc/collected" element={<APIDocCollected />} />
+          <Route path="/api-doc/weather/collected" element={<APIDocCollected />} />
+          <Route path="/api-doc/weather/preprocessed" element={<APIPreprocessed />} />
+          <Route path="/api-doc/alert/collection" element={<APIAlertCollected />} />
+          <Route path="/api-doc/transport/disruption-forecast" element={<APIForecastPage />} />
+          <Route path="/api-doc/transport/disruption-analytics" element={<APIAnalyticsPage />} />
         </Routes>
       </ForecastProvider>
       </>
