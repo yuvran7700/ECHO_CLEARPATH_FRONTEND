@@ -24,7 +24,6 @@ jobs:
       # 1. LINTING + FORMATTING CHECK
       - name: Run ESLint
         run: npm run lint
-        continue-on-error: true
 
       - name: Run smoke tests
         run: npx vitest run src/tests/smoke
