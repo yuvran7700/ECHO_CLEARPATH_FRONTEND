@@ -1,0 +1,62 @@
+name: Frontend CI
+
+on:
+  pull_request:
+    branches:
+      - "main"
+      - "develop"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      # 1. LINTING + FORMATTING CHECK
+      - name: Run ESLint
+        run: npm run lint
+
+      - name: Run smoke tests
+        run: npx vitest run src/tests/smoke
+
+      - name: Run component tests
+        run: npx vitest run src/tests/component
+
+      - name: Run hooks tests
+        run: npx vitest run src/tests/hooks
+
+      - name: Run context tests
+        run: npx vitest run src/tests/context
+
+      - name: Run integration tests
+        run: npx vitest run src/tests/integration
+
+      - name: Run contract tests
+        run: npx vitest run src/tests/contract
+        env:
+          VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
+
+      # 4. COVERAGE TESTING
+      - name: Run coverage
+        run: npx vitest run --coverage
+        env:
+          VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-testing-report
+          path: coverage/
+
+      # 5. BUILD CHECK
+      - name: Build
+        run: npm run build
